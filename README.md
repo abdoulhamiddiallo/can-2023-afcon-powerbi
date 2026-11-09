@@ -14,9 +14,9 @@
 
 <br>
 
-<img src="docs/gifs/apercu-video.gif" alt="Aperçu vidéo du rapport CAN 2023" width="100%">
+<img src="docs/gifs/apercu.gif" alt="Aperçu animé du rapport CAN 2023" width="100%">
 
-<sub>🎬 Vidéo complète (1 min 20, 1920x1080) : <a href="docs/video/CAN2023_video_1920x1080.mp4">docs/video/CAN2023_video_1920x1080.mp4</a> · 📄 Rapport complet en PDF : <a href="docs/CAN_2023_rapport.pdf">docs/CAN_2023_rapport.pdf</a></sub>
+<sub>📄 Rapport complet en PDF : <a href="docs/CAN_2023_rapport.pdf">docs/CAN_2023_rapport.pdf</a></sub>
 
 </div>
 
@@ -60,7 +60,7 @@
 
 <img src="docs/gifs/visite-11-pages.gif" alt="Visite des 11 pages" width="100%">
 
-**Centre de match et Parcours, filmés dans la vidéo**
+**Centre de match et Parcours en action**
 
 <img src="docs/gifs/match-et-parcours.gif" alt="Centre de match et parcours" width="100%">
 
@@ -148,14 +148,12 @@ flowchart LR
     C --> D["📐 204 mesures DAX<br/>12 dossiers"]
     D --> E["📊 Rapport PBIR<br/>11 pages · 984 visuels"]
     E --> F["📄 Export PDF"]
-    E --> G["🎬 Vidéo 1920x1080"]
     style A fill:#0C382C,stroke:#2FBF71,color:#F6F1E6
     style B fill:#0C382C,stroke:#F28C1E,color:#F6F1E6
     style C fill:#0C382C,stroke:#2FBF71,color:#F6F1E6
     style D fill:#0C382C,stroke:#F0C450,color:#F6F1E6
     style E fill:#0C382C,stroke:#F28C1E,color:#F6F1E6
     style F fill:#0C382C,stroke:#F6F1E6,color:#F6F1E6
-    style G fill:#0C382C,stroke:#F6F1E6,color:#F6F1E6
 ```
 
 ---
@@ -225,7 +223,7 @@ Taux de remplissage = DIVIDE ( [Spectateurs], [Capacité offerte] )
 | 📐 Calcul | **DAX** | 204 mesures, classements `RANKX`, tables de sélection, textes dynamiques |
 | 📊 Restitution | **Power BI · PBIR** | 11 pages, 984 visuels, thème personnalisé, navigation par boutons |
 | 🔀 Versionnement | **Git · PBIP** | Projet entièrement en texte, diffable et relisible |
-| 🎬 Diffusion | **PDF · vidéo 1920x1080** | Export du rapport et vidéo de présentation |
+| 📄 Diffusion | **PDF** | Export complet du rapport |
 
 ---
 
@@ -255,7 +253,7 @@ Ce qui est fourni pour reconstruire l'ensemble :
 
 - 🧱 la **structure exacte** de la source : [`sql/schema-source.sql`](sql/schema-source.sql) ;
 - ⚙️ toutes les **transformations Power Query**, dans les partitions TMDL de [`powerbi/CAN 2023.SemanticModel`](powerbi/CAN%202023.SemanticModel/definition/tables) ;
-- 📄 le **rendu final** du rapport en [PDF](docs/CAN_2023_rapport.pdf), en captures et en vidéo.
+- 📄 le **rendu final** du rapport en [PDF](docs/CAN_2023_rapport.pdf), en captures et en aperçus animés.
 
 ---
 
@@ -284,8 +282,7 @@ can-2023-afcon-powerbi/
     ├── modele-semantique.png              ← diagramme du modèle
     ├── CAN_2023_rapport.pdf               ← export complet du rapport
     ├── pages/                             ← 11 captures 1920x1080
-    ├── gifs/                              ← aperçus animés
-    └── video/                             ← vidéo de présentation 1920x1080
+    └── gifs/                              ← aperçus animés
 ```
 
 ---
