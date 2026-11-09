@@ -1,0 +1,55 @@
+table D_Stade
+	lineageTag: ed4d8de7-1c95-569f-9912-40e3ec57eb48
+
+	column StadeCode
+		dataType: string
+		isHidden
+		lineageTag: 3f2fc95e-e15a-5e04-aa6e-d968f9013e64
+		summarizeBy: none
+		sourceColumn: StadeCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Stade
+		dataType: string
+		lineageTag: 98c2af2d-4495-5f70-b919-3f50b8cea9a0
+		summarizeBy: none
+		sourceColumn: Stade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stade (court)'
+		dataType: string
+		lineageTag: 52148cce-991c-5d06-858c-57a27b240ece
+		summarizeBy: none
+		sourceColumn: StadeCourt
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ville
+		dataType: string
+		lineageTag: 25de8e3a-b2b2-5f65-b4e4-53fa1160c9d4
+		summarizeBy: none
+		sourceColumn: Ville
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capacité'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 7e016b56-5363-542c-9b62-b4adfc39e22c
+		summarizeBy: sum
+		sourceColumn: Capacite
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Stade = m
+		mode: import
+		source =
+				let
+				    Tableau = #table(type table [StadeCode = text, Stade = text, StadeCourt = text, Ville = text, Capacite = Int64.Type], {{"A", "Stade olympique Alassane Ouattara", "Alassane Ouattara", "Abidjan (Ebimpé)", 60000}, {"B", "Stade Félix Houphouët-Boigny", "Le Félicia", "Abidjan (Plateau)", 29000}, {"C", "Stade Charles Konan Banny", "Charles Konan Banny", "Yamoussoukro", 20000}, {"D", "Stade de la Paix", "Stade de la Paix", "Bouaké", 40000}, {"E", "Stade Amadou Gon Coulibaly", "Amadou Gon Coulibaly", "Korhogo", 20000}, {"F", "Stade Laurent Pokou", "Laurent Pokou", "San-Pédro", 20000}}),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Capacite", Int64.Type}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

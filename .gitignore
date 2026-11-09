@@ -1,0 +1,19 @@
+# Power BI : cache local et paramètres machine, jamais versionnés
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/
+*.abf
+*.pbix
+
+# Données : ce dépôt ne publie aucune donnée
+data/
+*.csv
+*.xlsx
+*.bak
+*.mdf
+*.ldf
+
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini

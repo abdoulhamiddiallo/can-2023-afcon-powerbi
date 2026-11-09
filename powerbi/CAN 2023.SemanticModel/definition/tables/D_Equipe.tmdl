@@ -1,0 +1,203 @@
+table D_Equipe
+	lineageTag: 043a632e-a978-5190-b8ff-c539b2513b02
+
+	column Team_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: a7fbb883-a96f-569b-b0c2-6f067f9187cf
+		summarizeBy: none
+		sourceColumn: Team_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Équipe'
+		dataType: string
+		lineageTag: a4a1ee61-721a-5146-8cce-b291e81a686b
+		summarizeBy: none
+		sourceColumn: Equipe
+		sortByColumn: 'Ordre du parcours'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Équipe (court)'
+		dataType: string
+		lineageTag: 85427af8-a477-5c80-8f3a-053ba2321422
+		summarizeBy: none
+		sourceColumn: Court
+		sortByColumn: 'Ordre du parcours'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Code
+		dataType: string
+		lineageTag: 407847b5-c4ff-56d1-aee1-a2e332ad8e92
+		summarizeBy: none
+		sourceColumn: Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Surnom
+		dataType: string
+		lineageTag: 68ff6ef6-0fab-55ef-af23-021a4eb56cbb
+		summarizeBy: none
+		sourceColumn: Surnom
+
+		annotation SummarizationSetBy = Automatic
+
+	column Couleur
+		dataType: string
+		isHidden
+		lineageTag: c4a45acc-cf6a-5154-a40b-b23678253414
+		summarizeBy: none
+		sourceColumn: Couleur
+
+		annotation SummarizationSetBy = Automatic
+
+	column Drapeau
+		dataType: string
+		lineageTag: ba2018ee-547a-517a-8935-a80c487e0654
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: Drapeau
+
+		annotation SummarizationSetBy = Automatic
+
+	column Groupe
+		dataType: string
+		lineageTag: d95a3489-243b-5693-8a2e-0d376fcd390d
+		summarizeBy: none
+		sourceColumn: Groupe
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Lettre du groupe'
+		dataType: string
+		lineageTag: abaf84bf-147d-5907-ad82-fb0fbc0cfcb1
+		summarizeBy: none
+		sourceColumn: GroupeLettre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Position dans le groupe'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7da5e34a-5add-5aab-93a0-627c99d8527e
+		summarizeBy: none
+		sourceColumn: PosGroupe
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Points (groupe)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 50ca0e56-e39b-5b66-9f3a-b72585464f27
+		summarizeBy: none
+		sourceColumn: PtsGroupe
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parcours
+		dataType: string
+		lineageTag: ade0572c-2f53-58b5-9441-704bb5061fe6
+		summarizeBy: none
+		sourceColumn: Parcours
+		sortByColumn: 'Ordre du parcours'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre du parcours'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: a9302b75-4f57-516d-8278-810bd80dabd2
+		summarizeBy: none
+		sourceColumn: ParcoursOrdre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Statut
+		dataType: string
+		lineageTag: 0b0a10d4-5905-5b25-96e5-07720d24175f
+		summarizeBy: none
+		sourceColumn: Statut
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Penalties tentés'
+		dataType: int64
+		formatString: 0
+		lineageTag: ef826d1d-6eae-5fc9-b91e-63a905f1c78f
+		summarizeBy: sum
+		sourceColumn: PenaltiesTentes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Penalties réussis'
+		dataType: int64
+		formatString: 0
+		lineageTag: d22e4ff7-9afa-5ccf-877c-07890afb1042
+		summarizeBy: sum
+		sourceColumn: PenaltiesReussis
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Équipe et surnom'
+		dataType: string
+		lineageTag: 9ac0a9f0-5222-5aa4-9440-67ce9c3f5a13
+		summarizeBy: none
+		sourceColumn: EquipeLabel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Equipe = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    Matches0 = Source{[Schema = "dbo", Item = "Matches"]}[Data],
+				    Teams0 = Source{[Schema = "dbo", Item = "Teams"]}[Data],
+				    Cles = Record.FromList(List.Transform(Teams0[Team_ID], each Int64.From(_)), List.Transform(Teams0[Team_Name], each Text.Lower(Text.Trim(_)))),
+				    IdDe = (nom as text) as number => Record.Field(Cles, Text.Lower(Text.Trim(nom))),
+				    Noms = Record.FromList({"Guinée équatoriale", "Nigeria", "Côte d'Ivoire", "Guinée-Bissau", "Cap-Vert", "Égypte", "Ghana", "Mozambique", "Sénégal", "Cameroun", "Guinée", "Gambie", "Angola", "Burkina Faso", "Mauritanie", "Algérie", "Mali", "Afrique du Sud", "Namibie", "Tunisie", "Maroc", "RD Congo", "Zambie", "Tanzanie"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Codes = Record.FromList({"GNQ", "NGA", "CIV", "GNB", "CPV", "EGY", "GHA", "MOZ", "SEN", "CMR", "GIN", "GMB", "AGO", "BFA", "MRT", "DZA", "MLI", "ZAF", "NAM", "TUN", "MAR", "COD", "ZMB", "TZA"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    NomDe = (id) => if id = null then null else Record.Field(Noms, Text.From(id)),
+				    CodeDe = (id) => if id = null then null else Record.Field(Codes, Text.From(id)),
+				    MatchsT = Table.Buffer(Table.FromRecords(List.Transform(Table.ToRecords(Matches0), (r) => [M = Int64.From(r[Match_ID]), D = IdDe(r[Home_Team]), E = IdDe(r[Away_Team])]))),
+				    AdvDe = (m as number, t as number) => let x = Table.SelectRows(MatchsT, (z) => z[M] = m){0} in if x[D] = t then x[E] else x[D],
+				    MinuteDe = (v, f) => let n = if v = null then 0 else Number.Round(v), fl = if f = null then "" else f,
+				        b = if fl = "Additional Time" then (if n <= 60 then 45 else 90)
+				            else if fl = "Additional In Extra Time" or fl = "Additional Extra Time" then (if n <= 112 then 105 else 120)
+				            else n,
+				        a = if b = n then 0 else n - b
+				      in [Base = b, Add = a, Texte = Text.From(b) & (if a > 0 then "+" & Text.From(a) else "") & "'", Tri = b * 10 + a],
+				    TrancheDe = (b as number) => if b <= 15 then {"0-15'", 1} else if b <= 30 then {"16-30'", 2} else if b <= 45 then {"31-45'", 3}
+				        else if b <= 60 then {"46-60'", 4} else if b <= 75 then {"61-75'", 5} else if b <= 90 then {"76-90'", 6} else {"91-120'", 7},
+				    Groups0 = Source{[Schema = "dbo", Item = "Groups"]}[Data],
+				    Surnoms = Record.FromList({"Nzalang Nacional", "Super Eagles", "Les Éléphants", "Djurtus", "Tubarões Azuis", "Les Pharaons", "Black Stars", "Os Mambas", "Lions de la Teranga", "Lions indomptables", "Syli national", "Les Scorpions", "Palancas Negras", "Les Étalons", "Al-Mourabitoune", "Les Fennecs", "Les Aigles", "Bafana Bafana", "Brave Warriors", "Aigles de Carthage", "Lions de l'Atlas", "Les Léopards", "Chipolopolo", "Taifa Stars"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Couleurs = Record.FromList({"#4DB33D", "#2FBF71", "#F28C1E", "#E8475A", "#4A86E8", "#E8475A", "#F5C842", "#E8475A", "#2FBF71", "#2FBF71", "#F5C842", "#4A86E8", "#E8475A", "#E8475A", "#2FBF71", "#2FBF71", "#F5C842", "#F5C842", "#4A86E8", "#E8475A", "#E8475A", "#4AB3F0", "#F28C1E", "#4AB3F0"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Courts = Record.FromList({"Guinée éq.", "Nigeria", "Côte d'Ivoire", "Guinée-Bissau", "Cap-Vert", "Égypte", "Ghana", "Mozambique", "Sénégal", "Cameroun", "Guinée", "Gambie", "Angola", "Burkina Faso", "Mauritanie", "Algérie", "Mali", "Afr. du Sud", "Namibie", "Tunisie", "Maroc", "RD Congo", "Zambie", "Tanzanie"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Drapeaux = Record.FromList({"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='13.34' fill='%233E9A00'/><rect y='13.33' width='60' height='13.34' fill='%23FFFFFF'/><rect y='26.66' width='60' height='13.34' fill='%23E32118'/><polygon points='0,0 15,20 0,40' fill='%230073CE'/><rect x='27' y='15' width='6' height='9' rx='1.5' fill='%239AA7A0'/><rect x='29.3' y='11' width='1.4' height='4' fill='%233E9A00'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='20' height='40' fill='%23008751'/><rect x='20' width='20' height='40' fill='%23FFFFFF'/><rect x='40' width='20' height='40' fill='%23008751'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='20' height='40' fill='%23F77F00'/><rect x='20' width='20' height='40' fill='%23FFFFFF'/><rect x='40' width='20' height='40' fill='%23009E60'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='20' fill='%23FCD116'/><rect y='20' width='60' height='20' fill='%23009E49'/><rect width='20' height='40' fill='%23CE1126'/><polygon points='10.00,14.00 11.46,18.49 16.18,18.49 12.36,21.27 13.82,25.76 10.00,22.98 6.18,25.76 7.64,21.27 3.82,18.49 8.54,18.49' fill='%23000000'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='40' fill='%23003893'/><rect y='20' width='60' height='10' fill='%23FFFFFF'/><rect y='22.5' width='60' height='5' fill='%23CF2027'/><polygon points='22.50,13.90 22.93,15.21 24.31,15.21 23.19,16.02 23.62,17.34 22.50,16.53 21.38,17.34 21.81,16.02 20.69,15.21 22.07,15.21' fill='%23F7D116'/><polygon points='27.91,15.66 28.33,16.97 29.71,16.97 28.60,17.78 29.02,19.09 27.91,18.28 26.79,19.09 27.22,17.78 26.10,16.97 27.48,16.97' fill='%23F7D116'/><polygon points='31.25,20.26 31.68,21.57 33.06,21.57 31.94,22.38 32.37,23.69 31.25,22.88 30.13,23.69 30.56,22.38 29.44,21.57 30.82,21.57' fill='%23F7D116'/><polygon points='31.25,25.94 31.68,27.26 33.06,27.26 31.94,28.07 32.37,29.38 31.25,28.57 30.13,29.38 30.56,28.07 29.44,27.26 30.82,27.26' fill='%23F7D116'/><polygon points='27.91,30.54 28.33,31.86 29.71,31.86 28.60,32.67 29.02,33.98 27.91,33.17 26.79,33.98 27.22,32.67 26.10,31.86 27.48,31.86' fill='%23F7D116'/><polygon points='22.50,32.30 22.93,33.61 24.31,33.61 23.19,34.42 23.62,35.74 22.50,34.93 21.38,35.74 21.81,34.42 20.69,33.61 22.07,33.61' fill='%23F7D116'/><polygon points='17.09,30.54 17.52,31.86 18.90,31.86 17.78,32.67 18.21,33.98 17.09,33.17 15.98,33.98 16.40,32.67 15.29,31.86 16.67,31.86' fill='%23F7D116'/><polygon points='13.75,25.94 14.18,27.26 15.56,27.26 14.44,28.07 14.87,29.38 13.75,28.57 12.63,29.38 13.06,28.07 11.94,27.26 13.32,27.26' fill='%23F7D116'/><polygon points='13.75,20.26 14.18,21.57 15.56,21.57 14.44,22.38 14.87,23.69 13.75,22.88 12.63,23.69 13.06,22.38 11.94,21.57 13.32,21.57' fill='%23F7D116'/><polygon points='17.09,15.66 17.52,16.97 18.90,16.97 17.78,17.78 18.21,19.09 17.09,18.28 15.98,19.09 16.40,17.78 15.29,16.97 16.67,16.97' fill='%23F7D116'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='13.34' fill='%23CE1126'/><rect y='13.33' width='60' height='13.34' fill='%23FFFFFF'/><rect y='26.66' width='60' height='13.34' fill='%23000000'/><path d='M27,16 L33,16 L32,23 L30,25 L28,23 Z' fill='%23C09300'/><circle cx='30' cy='15' r='1.6' fill='%23C09300'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='13.34' fill='%23CE1126'/><rect y='13.33' width='60' height='13.34' fill='%23FCD116'/><rect y='26.66' width='60' height='13.34' fill='%23006B3F'/><polygon points='30.00,14.30 31.39,18.58 35.90,18.58 32.25,21.23 33.64,25.52 30.00,22.87 26.36,25.52 27.75,21.23 24.10,18.58 28.61,18.58' fill='%23000000'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='13' fill='%23007168'/><rect y='13' width='60' height='14' fill='%23FFFFFF'/><rect y='14.5' width='60' height='11' fill='%23000000'/><rect y='27' width='60' height='13' fill='%23FCE100'/><polygon points='0,0 26,20 0,40' fill='%23D21034'/><polygon points='9.00,14.50 10.35,18.65 14.71,18.65 11.18,21.21 12.53,25.35 9.00,22.79 5.47,25.35 6.82,21.21 3.29,18.65 7.65,18.65' fill='%23FCE100'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='20' height='40' fill='%2300853F'/><rect x='20' width='20' height='40' fill='%23FDEF42'/><rect x='40' width='20' height='40' fill='%23E31B23'/><polygon points='30.00,14.30 31.39,18.58 35.90,18.58 32.25,21.23 33.64,25.52 30.00,22.87 26.36,25.52 27.75,21.23 24.10,18.58 28.61,18.58' fill='%2300853F'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='20' height='40' fill='%23007A5E'/><rect x='20' width='20' height='40' fill='%23CE1126'/><rect x='40' width='20' height='40' fill='%23FCD116'/><polygon points='30.00,14.30 31.39,18.58 35.90,18.58 32.25,21.23 33.64,25.52 30.00,22.87 26.36,25.52 27.75,21.23 24.10,18.58 28.61,18.58' fill='%23FCD116'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='20' height='40' fill='%23CE1126'/><rect x='20' width='20' height='40' fill='%23FCD116'/><rect x='40' width='20' height='40' fill='%23009460'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='13' fill='%23CE1126'/><rect y='13' width='60' height='14' fill='%23FFFFFF'/><rect y='15' width='60' height='10' fill='%230C1C8C'/><rect y='27' width='60' height='13' fill='%233A7728'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='20' fill='%23CC092F'/><rect y='20' width='60' height='20' fill='%23000000'/><path d='M22,26 A9,9 0 1 0 36,13' fill='none' stroke='%23FFCB00' stroke-width='2.6'/><line x1='24' y1='13' x2='37' y2='27' stroke='%23FFCB00' stroke-width='2.6'/><polygon points='30.00,13.80 30.72,16.01 33.04,16.01 31.16,17.38 31.88,19.59 30.00,18.22 28.12,19.59 28.84,17.38 26.96,16.01 29.28,16.01' fill='%23FFCB00'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='20' fill='%23EF2B2D'/><rect y='20' width='60' height='20' fill='%23009E49'/><polygon points='30.00,14.30 31.39,18.58 35.90,18.58 32.25,21.23 33.64,25.52 30.00,22.87 26.36,25.52 27.75,21.23 24.10,18.58 28.61,18.58' fill='%23FCD116'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='40' fill='%2300A95C'/><rect width='60' height='6' fill='%23D01C1F'/><rect y='34' width='60' height='6' fill='%23D01C1F'/><path d='M19,17 A11,11 0 0 0 41,17 A11,9 0 0 1 19,17 Z' fill='%23FFD700'/><polygon points='30.00,11.00 30.90,13.76 33.80,13.76 31.45,15.47 32.35,18.24 30.00,16.53 27.65,18.24 28.55,15.47 26.20,13.76 29.10,13.76' fill='%23FFD700'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='30' height='40' fill='%23006233'/><rect x='30' width='30' height='40' fill='%23FFFFFF'/><circle cx='30' cy='20' r='10' fill='%23D21034'/><circle cx='33' cy='20' r='8.0' fill='%23FFFFFF'/><polygon points='30.10,20.00 33.14,19.01 33.14,15.82 35.02,18.40 38.06,17.41 36.18,20.00 38.06,22.59 35.02,21.60 33.14,24.18 33.14,20.99' fill='%23D21034'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='20' height='40' fill='%2314B53A'/><rect x='20' width='20' height='40' fill='%23FCD116'/><rect x='40' width='20' height='40' fill='%23CE1126'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='20' fill='%23E03C31'/><rect y='20' width='60' height='20' fill='%23001489'/><polygon points='0,0 9,0 29,14 60,14 60,26 29,26 9,40 0,40' fill='%23FFFFFF'/><polygon points='0,0 5,0 27,16.5 60,16.5 60,23.5 27,23.5 5,40 0,40' fill='%23007749'/><polygon points='0,4 20,20 0,36' fill='%23FFB81C'/><polygon points='0,7.5 16,20 0,32.5' fill='%23000000'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='40' fill='%23009543'/><polygon points='0,0 60,0 0,40' fill='%23003580'/><polygon points='0,40 0,31 46,0 60,0 60,9 14,40' fill='%23FFFFFF'/><polygon points='0,40 0,35 52,0 60,0 60,5 8,40' fill='%23D21034'/><polygon points='12.00,4.00 13.35,8.15 17.71,8.15 14.18,10.71 15.53,14.85 12.00,12.29 8.47,14.85 9.82,10.71 6.29,8.15 10.65,8.15' fill='%23FFCE00'/><circle cx='12' cy='10' r='3' fill='%23FFCE00' stroke='%23003580' stroke-width='0.8'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='40' fill='%23E70013'/><circle cx='30' cy='20' r='10' fill='%23FFFFFF'/><circle cx='30.5' cy='20' r='7.5' fill='%23E70013'/><circle cx='32.5' cy='20' r='6.0' fill='%23FFFFFF'/><polygon points='28.50,20.00 31.26,19.10 31.26,16.20 32.97,18.55 35.74,17.65 34.03,20.00 35.74,22.35 32.97,21.45 31.26,23.80 31.26,20.90' fill='%23E70013'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='40' fill='%23C1272D'/><polygon points='30.00,11.50 35.29,27.78 21.44,17.72 38.56,17.72 24.71,27.78' fill='none' stroke='%23006233' stroke-width='1.8' stroke-linejoin='round'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='40' fill='%23007FFF'/><polygon points='0,32 48,0 60,0 60,8 12,40 0,40' fill='%23F7D618'/><polygon points='0,35 52,0 60,0 60,5 8,40 0,40' fill='%23CE1021'/><polygon points='10.00,3.00 11.35,7.15 15.71,7.15 12.18,9.71 13.53,13.85 10.00,11.29 6.47,13.85 7.82,9.71 4.29,7.15 8.65,7.15' fill='%23F7D618'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='40' fill='%23198A00'/><rect x='39' y='16' width='7' height='24' fill='%23DE2010'/><rect x='46' y='16' width='7' height='24' fill='%23000000'/><rect x='53' y='16' width='7' height='24' fill='%23EF7D00'/><path d='M42,9 Q49,4 57,9 Q52,9 49.5,12 Q47,9 42,9 Z' fill='%23EF7D00'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>", "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(3,9) scale(0.9667,1.15)'><rect width='60' height='40' fill='%231EB53A'/><polygon points='60,0 60,40 0,40' fill='%2300A3DD'/><polygon points='0,40 0,30 45,0 60,0 60,10 15,40' fill='%23FCD116'/><polygon points='0,40 0,34 51,0 60,0 60,6 9,40' fill='%23000000'/></g><rect x='3' y='9' width='58' height='46' rx='3' fill='none' stroke='%23F6F1E6' stroke-width='2.4'/></svg>"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    ParcLib = Record.FromList({"Champion", "Finaliste", "3e place", "4e place", "Quarts de finale", "8es de finale", "Phase de groupes"}, {"Champion", "Vice Champion", "Third Place Play Off", "Semi Final", "Quarter Final", "Round of 16", "Group Stage"}),
+				    ParcOrd = Record.FromList({1, 2, 3, 4, 5, 6, 7}, {"Champion", "Vice Champion", "Third Place Play Off", "Semi Final", "Quarter Final", "Round of 16", "Group Stage"}),
+				    Grp = Table.Buffer(Groups0),
+				    Lignes = List.Transform(Table.ToRecords(Teams0), (r) => let
+				        id = Int64.From(r[Team_ID]),
+				        g = Table.SelectRows(Grp, (x) => Int64.From(x[Team_ID]) = id){0},
+				        hf = Text.Trim(r[Highest_Finish]),
+				        po = Record.Field(ParcOrd, hf)
+				      in [Team_ID = id, Equipe = NomDe(id), Court = Record.Field(Courts, Text.From(id)), Code = CodeDe(id),
+				          Surnom = Record.Field(Surnoms, Text.From(id)), Couleur = Record.Field(Couleurs, Text.From(id)),
+				          Drapeau = Record.Field(Drapeaux, Text.From(id)),
+				          Groupe = "Groupe " & Text.Start(g[Group_ID], 1), GroupeLettre = Text.Start(g[Group_ID], 1),
+				          PosGroupe = Int64.From(g[Position]), PtsGroupe = Int64.From(g[Points_Gained]),
+				          Parcours = Record.Field(ParcLib, hf), ParcoursOrdre = po,
+				          Statut = if po < 7 then "Qualifiée" else "Éliminée",
+				          PenaltiesTentes = Int64.From(r[Penalty_Kicks_Attempted]), PenaltiesReussis = Int64.From(r[Penalty_Kicks_Made]),
+				          EquipeLabel = NomDe(id) & "  ·  " & Record.Field(Surnoms, Text.From(id))]),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Team_ID", Int64.Type}, {"Equipe", type text}, {"Court", type text}, {"Code", type text}, {"Surnom", type text}, {"Couleur", type text}, {"Drapeau", type text}, {"Groupe", type text}, {"GroupeLettre", type text}, {"PosGroupe", Int64.Type}, {"PtsGroupe", Int64.Type}, {"Parcours", type text}, {"ParcoursOrdre", Int64.Type}, {"Statut", type text}, {"PenaltiesTentes", Int64.Type}, {"PenaltiesReussis", Int64.Type}, {"EquipeLabel", type text}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

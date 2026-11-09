@@ -1,0 +1,117 @@
+table F_Remplacement
+	lineageTag: fca0ec77-9c6a-5a4e-8dbe-8c495ddc6aa3
+
+	column Substitution_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 2cdbc705-02aa-5842-b9ae-48f50a55d260
+		summarizeBy: none
+		sourceColumn: Substitution_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Match_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: e96037b6-e349-5ec9-a419-e59871004c14
+		summarizeBy: none
+		sourceColumn: Match_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 708c6f36-0242-50d9-8444-982b3c571d32
+		summarizeBy: none
+		sourceColumn: Team_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sortant
+		dataType: string
+		lineageTag: 2a43bf2f-57c9-5861-8da3-4ec66486caa7
+		summarizeBy: none
+		sourceColumn: Sortant
+
+		annotation SummarizationSetBy = Automatic
+
+	column Entrant
+		dataType: string
+		lineageTag: fbd163a4-300b-51d9-8886-110890e47d36
+		summarizeBy: none
+		sourceColumn: Entrant
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Poste sortant'
+		dataType: string
+		lineageTag: be67023d-66a2-5cdc-bbca-a68c7555dd8b
+		summarizeBy: none
+		sourceColumn: PosteSortant
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Poste entrant'
+		dataType: string
+		lineageTag: 76da5e6e-76a4-5a1e-9393-ad011b08d268
+		summarizeBy: none
+		sourceColumn: PosteEntrant
+
+		annotation SummarizationSetBy = Automatic
+
+	column Minute
+		dataType: int64
+		formatString: 0
+		lineageTag: dd101ff2-e73a-56a5-98ed-f27dbf5efa87
+		summarizeBy: none
+		sourceColumn: Minute
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Période'
+		dataType: string
+		lineageTag: fc9594b7-91de-562a-8fe4-00edca32d8d3
+		summarizeBy: none
+		sourceColumn: Periode
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Remplacement = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    Matches0 = Source{[Schema = "dbo", Item = "Matches"]}[Data],
+				    Teams0 = Source{[Schema = "dbo", Item = "Teams"]}[Data],
+				    Cles = Record.FromList(List.Transform(Teams0[Team_ID], each Int64.From(_)), List.Transform(Teams0[Team_Name], each Text.Lower(Text.Trim(_)))),
+				    IdDe = (nom as text) as number => Record.Field(Cles, Text.Lower(Text.Trim(nom))),
+				    Noms = Record.FromList({"Guinée équatoriale", "Nigeria", "Côte d'Ivoire", "Guinée-Bissau", "Cap-Vert", "Égypte", "Ghana", "Mozambique", "Sénégal", "Cameroun", "Guinée", "Gambie", "Angola", "Burkina Faso", "Mauritanie", "Algérie", "Mali", "Afrique du Sud", "Namibie", "Tunisie", "Maroc", "RD Congo", "Zambie", "Tanzanie"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Codes = Record.FromList({"GNQ", "NGA", "CIV", "GNB", "CPV", "EGY", "GHA", "MOZ", "SEN", "CMR", "GIN", "GMB", "AGO", "BFA", "MRT", "DZA", "MLI", "ZAF", "NAM", "TUN", "MAR", "COD", "ZMB", "TZA"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    NomDe = (id) => if id = null then null else Record.Field(Noms, Text.From(id)),
+				    CodeDe = (id) => if id = null then null else Record.Field(Codes, Text.From(id)),
+				    MatchsT = Table.Buffer(Table.FromRecords(List.Transform(Table.ToRecords(Matches0), (r) => [M = Int64.From(r[Match_ID]), D = IdDe(r[Home_Team]), E = IdDe(r[Away_Team])]))),
+				    AdvDe = (m as number, t as number) => let x = Table.SelectRows(MatchsT, (z) => z[M] = m){0} in if x[D] = t then x[E] else x[D],
+				    MinuteDe = (v, f) => let n = if v = null then 0 else Number.Round(v), fl = if f = null then "" else f,
+				        b = if fl = "Additional Time" then (if n <= 60 then 45 else 90)
+				            else if fl = "Additional In Extra Time" or fl = "Additional Extra Time" then (if n <= 112 then 105 else 120)
+				            else n,
+				        a = if b = n then 0 else n - b
+				      in [Base = b, Add = a, Texte = Text.From(b) & (if a > 0 then "+" & Text.From(a) else "") & "'", Tri = b * 10 + a],
+				    TrancheDe = (b as number) => if b <= 15 then {"0-15'", 1} else if b <= 30 then {"16-30'", 2} else if b <= 45 then {"31-45'", 3}
+				        else if b <= 60 then {"46-60'", 4} else if b <= 75 then {"61-75'", 5} else if b <= 90 then {"76-90'", 6} else {"91-120'", 7},
+				    PosteFr = (x) => if x = null then null else Record.FieldOrDefault(Record.FromList({"Attaquant", "Milieu", "Défenseur", "Gardien"}, {"Forward", "Midfielder", "Defender", "Goalkeeper"}), Text.Trim(x), Text.Trim(x)),
+				    S0 = Source{[Schema = "dbo", Item = "Substitutions"]}[Data],
+				    Lignes = List.Transform(Table.ToRecords(S0), (r) => let mn = MinuteDe(r[Minute_Substitution], r[Minute_Format]), f = Text.Trim(r[Minute_Format]) in
+				        [Substitution_ID = Int64.From(r[Substitution_ID]), Match_ID = Int64.From(r[Match_ID]), Team_ID = Int64.From(r[Team_ID]),
+				         Sortant = Text.Trim(r[Exit]), Entrant = Text.Trim(r[Entry]), PosteSortant = PosteFr(r[Position_Exit]), PosteEntrant = PosteFr(r[Position_Entry]),
+				         Minute = mn[Base], Periode = if Text.Contains(f, "Extra") then "Prolongation" else if f = "Additional Time" then "Temps additionnel" else "Temps réglementaire"]),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Substitution_ID", Int64.Type}, {"Match_ID", Int64.Type}, {"Team_ID", Int64.Type}, {"Sortant", type text}, {"Entrant", type text}, {"PosteSortant", type text}, {"PosteEntrant", type text}, {"Minute", Int64.Type}, {"Periode", type text}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

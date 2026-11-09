@@ -1,0 +1,981 @@
+table Metrics
+	lineageTag: 42ceee94-591a-5556-9683-61b5356771b9
+
+	/// Nombre de matchs dans le contexte
+	measure 'Matchs' = COUNTROWS ( D_Match ) + 0
+		formatString: 0
+		lineageTag: 15494d5e-64f3-536c-8e73-c3424a380e52
+		displayFolder: 01 Tournoi
+
+	measure 'Buts' = COUNTROWS ( F_But ) + 0
+		formatString: #,0
+		lineageTag: 8cabdf8e-cbeb-5cc7-87dd-0ca4ec0fc6ca
+		displayFolder: 01 Tournoi
+
+	measure 'Buts par match' = DIVIDE ( [Buts], [Matchs] )
+		formatString: 0.00
+		lineageTag: c543917a-0974-59aa-a3c7-2244a9af0c08
+		displayFolder: 01 Tournoi
+
+	measure 'Nations' = COUNTROWS ( D_Equipe )
+		formatString: 0
+		lineageTag: 45b2aae8-9542-5045-a631-8667ecd414cc
+		displayFolder: 01 Tournoi
+
+	measure 'Stades' = DISTINCTCOUNT ( D_Match[StadeCode] )
+		formatString: 0
+		lineageTag: dc2f0673-6205-567a-92f6-96d8c3581b02
+		displayFolder: 01 Tournoi
+
+	/// Abidjan compte une seule fois (Ebimpé et Plateau)
+	measure 'Villes hôtes' = CALCULATE ( DISTINCTCOUNT ( D_Stade[Ville] ), D_Stade[Ville] <> "Abidjan (Plateau)" )
+		formatString: 0
+		lineageTag: 86b2420e-557d-550c-8838-e26907dec961
+		displayFolder: 01 Tournoi
+
+	measure 'Spectateurs' = SUM ( D_Match[Affluence] )
+		formatString: #,0
+		lineageTag: 9b3f4532-9deb-502c-9fd1-f6d5fede1b20
+		displayFolder: 01 Tournoi
+
+	measure 'Affluence moyenne' = AVERAGE ( D_Match[Affluence] )
+		formatString: #,0
+		lineageTag: 388aa1f4-fe80-56fc-9de7-b72416a5b2e2
+		displayFolder: 01 Tournoi
+
+	measure 'Record affluence' = MAX ( D_Match[Affluence] )
+		formatString: #,0
+		lineageTag: 391c2d30-2720-5f59-8681-24bd361b123c
+		displayFolder: 01 Tournoi
+
+	measure 'Capacité offerte' = SUMX ( D_Match, RELATED ( D_Stade[Capacité] ) )
+		formatString: #,0
+		lineageTag: f39e12e2-9535-5e70-b511-65978bd6b8d1
+		displayFolder: 01 Tournoi
+
+	measure 'Taux de remplissage' = DIVIDE ( [Spectateurs], [Capacité offerte] )
+		formatString: 0%
+		lineageTag: f006d860-7477-5853-ab94-5c7c1cb21ebd
+		displayFolder: 01 Tournoi
+
+	/// Buts hors contre son camp, crédités au buteur
+	measure 'Réalisations' = CALCULATE ( COUNTROWS ( F_But ), F_But[Type de but] <> "Contre son camp" )
+		formatString: 0
+		lineageTag: 452d2a7c-2b09-53b5-be4a-f0f78aca74f5
+		displayFolder: 01 Tournoi
+
+	measure 'Penalties marqués' = CALCULATE ( COUNTROWS ( F_But ), F_But[Type de but] = "Penalty" ) + 0
+		formatString: 0
+		lineageTag: ba406d7f-ddc7-5557-b0cf-fc68b06ca7f6
+		displayFolder: 01 Tournoi
+
+	measure 'Buts contre son camp' = CALCULATE ( COUNTROWS ( F_But ), F_But[Type de but] = "Contre son camp" ) + 0
+		formatString: 0
+		lineageTag: b35334ed-5cbb-580d-8d40-f1c70b680cd9
+		displayFolder: 01 Tournoi
+
+	measure 'Buts en temps additionnel' = CALCULATE ( COUNTROWS ( F_But ), F_But[Temps additionnel] = 1 ) + 0
+		formatString: 0
+		lineageTag: 5e8e930a-32dc-5e62-a782-088a084adda8
+		displayFolder: 01 Tournoi
+
+	measure 'Part des buts sur passe' = DIVIDE ( CALCULATE ( COUNTROWS ( F_But ), F_But[Avec passe décisive] = 1 ), [Buts] )
+		formatString: 0%
+		lineageTag: bf35e498-04c3-5d11-b394-dbd9e93c00bb
+		displayFolder: 01 Tournoi
+
+	measure 'Matchs nuls' = CALCULATE ( COUNTROWS ( D_Match ), D_Match[Vainqueur] = "Match nul" ) + 0
+		formatString: 0
+		lineageTag: c0d41549-576b-58a2-ae74-0923844e561a
+		displayFolder: 01 Tournoi
+
+	measure 'Séances de tirs au but' = CALCULATE ( COUNTROWS ( D_Match ), D_Match[Tirs au but] = 1 ) + 0
+		formatString: 0
+		lineageTag: 0a074750-b826-526c-b47e-af7bfe274beb
+		displayFolder: 01 Tournoi
+
+	measure 'Prolongations' = CALCULATE ( COUNTROWS ( D_Match ), D_Match[Prolongation] = 1 ) + 0
+		formatString: 0
+		lineageTag: 84634a4f-e11f-59ef-83c8-73c62e1c1209
+		displayFolder: 01 Tournoi
+
+	measure 'Cartons' = COUNTROWS ( F_Carton ) + 0
+		formatString: 0
+		lineageTag: b381be82-c849-594c-9830-905c82bf425b
+		displayFolder: 01 Tournoi
+
+	measure 'Jaunes' = CALCULATE ( COUNTROWS ( F_Carton ), F_Carton[Carton] = "Jaune" ) + 0
+		formatString: 0
+		lineageTag: 7d8c8e51-4904-5a39-a78d-3624adc3bec7
+		displayFolder: 01 Tournoi
+
+	measure 'Rouges' = CALCULATE ( COUNTROWS ( F_Carton ), F_Carton[Carton] = "Rouge" ) + 0
+		formatString: 0
+		lineageTag: 9d5787cb-98bf-593d-b4af-a70b8cc8a411
+		displayFolder: 01 Tournoi
+
+	measure 'Cartons par match' = DIVIDE ( [Cartons], [Matchs] )
+		formatString: 0.0
+		lineageTag: c44b5f40-41f7-5b5b-8cbe-407069dc4c80
+		displayFolder: 01 Tournoi
+
+	measure 'Interventions VAR' = COUNTROWS ( F_VAR ) + 0
+		formatString: 0
+		lineageTag: 1f7ec459-a51f-5c5c-b4db-44df19737638
+		displayFolder: 01 Tournoi
+
+	measure 'Remplacements' = COUNTROWS ( F_Remplacement ) + 0
+		formatString: 0
+		lineageTag: ddedacae-6e28-5810-8b53-b8f07e43b642
+		displayFolder: 01 Tournoi
+
+	measure 'Fautes sifflées' = SUM ( F_EquipeMatch[Fautes] )
+		formatString: #,0
+		lineageTag: 6a3ce280-be5b-5d3a-94f9-5b2205469ef2
+		displayFolder: 01 Tournoi
+
+	measure 'Buteurs différents' = CALCULATE ( DISTINCTCOUNT ( F_But[Buteur] ), F_But[Type de but] <> "Contre son camp" )
+		formatString: 0
+		lineageTag: 331414fd-995d-5ca0-bc46-b9a32426b659
+		displayFolder: 01 Tournoi
+
+	measure 'Matchs joués' = COUNTROWS ( F_EquipeMatch ) + 0
+		formatString: 0
+		lineageTag: c78e143e-c4a2-546f-bc4a-cb74afc67714
+		displayFolder: 02 Équipes
+
+	/// Victoires dans le temps de jeu (prolongation comprise) ; une qualification aux tirs au but compte comme un nul
+	measure 'Victoires' = COUNTROWS ( FILTER ( F_EquipeMatch, F_EquipeMatch[Buts pour] > F_EquipeMatch[Buts contre] ) ) + 0
+		formatString: 0
+		lineageTag: fb4792b4-6bcb-543e-bde9-54a81cb6359f
+		displayFolder: 02 Équipes
+
+	measure 'Nuls' = COUNTROWS ( FILTER ( F_EquipeMatch, F_EquipeMatch[Buts pour] = F_EquipeMatch[Buts contre] ) ) + 0
+		formatString: 0
+		lineageTag: 7a727e12-1727-5ebd-a599-ca7c635e4951
+		displayFolder: 02 Équipes
+
+	measure 'Défaites' = COUNTROWS ( FILTER ( F_EquipeMatch, F_EquipeMatch[Buts pour] < F_EquipeMatch[Buts contre] ) ) + 0
+		formatString: 0
+		lineageTag: 5ffb763d-e0f9-5f42-bc71-d8391bf72662
+		displayFolder: 02 Équipes
+
+	measure 'Buts marqués' = SUM ( F_EquipeMatch[Buts pour] ) + 0
+		formatString: 0
+		lineageTag: c4d1ecc7-8802-55d2-82bc-fdd0fabb6272
+		displayFolder: 02 Équipes
+
+	measure 'Buts encaissés' = SUM ( F_EquipeMatch[Buts contre] ) + 0
+		formatString: 0
+		lineageTag: 1ce9da7d-ddb1-5010-9368-514a4f708d30
+		displayFolder: 02 Équipes
+
+	measure 'Différence de buts' = [Buts marqués] - [Buts encaissés]
+		formatString: +0;-0;0
+		lineageTag: be120313-2b76-5fd7-be94-0b086dd2dbf9
+		displayFolder: 02 Équipes
+
+	measure 'Points obtenus' = SUM ( F_EquipeMatch[Points] ) + 0
+		formatString: 0
+		lineageTag: 9098c85e-05a1-54b5-bf1c-516bef904ba5
+		displayFolder: 02 Équipes
+
+	measure 'Clean sheets' = SUM ( F_EquipeMatch[Clean sheet] ) + 0
+		formatString: 0
+		lineageTag: a708c26e-f817-5734-be08-cfa2ae2eb3f1
+		displayFolder: 02 Équipes
+
+	measure 'Possession moyenne' = AVERAGE ( F_EquipeMatch[Possession (%)] )
+		formatString: 0" %"
+		lineageTag: d452a943-eb52-5136-804d-e4778580ea1b
+		displayFolder: 02 Équipes
+
+	measure 'Tirs par match' = AVERAGE ( F_EquipeMatch[Tirs] )
+		formatString: 0.0
+		lineageTag: 62f6f9c5-47fc-54bd-847e-76a2b6170152
+		displayFolder: 02 Équipes
+
+	measure 'Tirs cadrés par match' = AVERAGE ( F_EquipeMatch[Tirs cadrés] )
+		formatString: 0.0
+		lineageTag: 9b9a24da-6757-5da2-8d90-a24e424d22e7
+		displayFolder: 02 Équipes
+
+	measure 'Précision des passes' = AVERAGE ( F_EquipeMatch[Précision des passes (%)] )
+		formatString: 0" %"
+		lineageTag: 803f62b7-c4bb-593b-a1f2-683618c83865
+		displayFolder: 02 Équipes
+
+	/// Drapeau de la nation en contexte
+	measure 'Nation' = SELECTEDVALUE ( D_Equipe[Drapeau] )
+		lineageTag: 75f49c47-d3bb-517f-a523-1347288d54ca
+		displayFolder: 02 Équipes
+		dataCategory: ImageUrl
+
+	measure 'Position' = MAX ( D_Equipe[Position dans le groupe] )
+		formatString: 0
+		lineageTag: 88dd2542-b1ab-5252-98e3-3e780c53c5fe
+		displayFolder: 02 Équipes
+
+	measure 'Clé de classement' = MAX ( D_Equipe[Ordre du parcours] ) * 10000 - ( 3 * [Victoires] + [Nuls] ) * 100 - [Différence de buts]
+		formatString: 0
+		lineageTag: 3089b2cc-5697-56be-bf70-7bb5546bbe95
+		displayFolder: 02 Équipes
+
+	measure 'Rang final' = IF ( HASONEVALUE ( D_Equipe[Team_ID] ), RANKX ( ALL ( D_Equipe ), [Clé de classement], , ASC, Dense ) )
+		formatString: 0
+		lineageTag: 98eae280-dcfb-5ebb-ba80-201e554d5d81
+		displayFolder: 02 Équipes
+
+	measure 'Rang (moitié haute)' = IF ( [Rang final] <= 12, 1 )
+		formatString: 0
+		lineageTag: ad18d750-f45c-500f-8b99-d6dc43c6c891
+		displayFolder: 02 Équipes
+
+	measure 'Rang (moitié basse)' = IF ( [Rang final] > 12, 1 )
+		formatString: 0
+		lineageTag: 71989a29-ffb4-5ee5-9621-ba7873d6ebe2
+		displayFolder: 02 Équipes
+
+	measure 'V (groupes)' = CALCULATE ( [Victoires], D_Match[Phase] = "Phase de groupes" )
+		formatString: 0
+		lineageTag: 395efb8e-f742-5730-be3d-330c94f6b0e3
+		displayFolder: 03 Groupes
+
+	measure 'N (groupes)' = CALCULATE ( [Nuls], D_Match[Phase] = "Phase de groupes" )
+		formatString: 0
+		lineageTag: d4423599-68aa-563a-83fb-66ec3a8a9312
+		displayFolder: 03 Groupes
+
+	measure 'D (groupes)' = CALCULATE ( [Défaites], D_Match[Phase] = "Phase de groupes" )
+		formatString: 0
+		lineageTag: cea811fe-a4e4-5a6f-9dc3-0abb48449e3f
+		displayFolder: 03 Groupes
+
+	measure 'BP (groupes)' = CALCULATE ( [Buts marqués], D_Match[Phase] = "Phase de groupes" )
+		formatString: 0
+		lineageTag: 258d6404-09b7-5588-8824-567272e9c8e7
+		displayFolder: 03 Groupes
+
+	measure 'BC (groupes)' = CALCULATE ( [Buts encaissés], D_Match[Phase] = "Phase de groupes" )
+		formatString: 0
+		lineageTag: eccace8e-aed9-50aa-a499-7a25d3b3478a
+		displayFolder: 03 Groupes
+
+	measure 'Pts (groupes)' = CALCULATE ( [Points obtenus], D_Match[Phase] = "Phase de groupes" )
+		formatString: 0
+		lineageTag: 0375714c-bfa8-50f1-9767-a63eb6a2cd87
+		displayFolder: 03 Groupes
+
+	measure 'Diff (groupes)' = [BP (groupes)] - [BC (groupes)]
+		formatString: +0;-0;0
+		lineageTag: ef806ac7-e9d5-57a3-9907-39f0f5a66789
+		displayFolder: 03 Groupes
+
+	measure 'Rang des troisièmes' = IF ( HASONEVALUE ( D_Equipe[Team_ID] ), RANKX ( ALLSELECTED ( D_Equipe ), [Pts (groupes)] * 10000 + ( [Diff (groupes)] + 50 ) * 100 + [BP (groupes)], , DESC, Dense ) )
+		formatString: 0
+		lineageTag: 2f226835-34a0-58b5-b633-6956e0101491
+		displayFolder: 03 Groupes
+
+	measure 'Buts phase de groupes' = CALCULATE ( [Buts], D_Match[Phase] = "Phase de groupes" )
+		formatString: 0
+		lineageTag: a84270f6-8eb5-5cc7-8ba4-ad16fb7396be
+		displayFolder: 03 Groupes
+
+	measure 'Moyenne phase de groupes' = CALCULATE ( [Buts par match], D_Match[Phase] = "Phase de groupes" )
+		formatString: 0.00
+		lineageTag: 0df4b28a-3d6e-57ff-8503-03c1cfeabaf1
+		displayFolder: 03 Groupes
+
+	measure 'Nuls phase de groupes' = CALCULATE ( [Matchs nuls], D_Match[Phase] = "Phase de groupes" )
+		formatString: 0
+		lineageTag: b1ac392e-9008-5140-a543-fa9fbd5fbf66
+		displayFolder: 03 Groupes
+
+	measure 'Qualifiées' = CALCULATE ( COUNTROWS ( D_Equipe ), D_Equipe[Statut] = "Qualifiée" )
+		formatString: 0
+		lineageTag: 1b2740dc-f6c1-50c4-b7ab-4d150b5b22d9
+		displayFolder: 03 Groupes
+
+	measure 'Nation (match)' = IF ( NOT ISEMPTY ( F_EquipeMatch ), SELECTEDVALUE ( D_Equipe[Drapeau] ) )
+		lineageTag: 21016448-9e47-5631-af48-7fd8e65d7adf
+		displayFolder: 04 Tableau final
+		dataCategory: ImageUrl
+
+	measure 'Score (tableau)' = IF ( NOT ISEMPTY ( F_EquipeMatch ), FORMAT ( SUM ( F_EquipeMatch[Buts pour] ), "0" ) & IF ( SUM ( F_EquipeMatch[Nul puis t.a.b.] ) = 1 && SUM ( F_EquipeMatch[Victoire] ) = 1, "*", "" ) )
+		lineageTag: 2299336b-a0e2-59c6-a025-02daf5ca0741
+		displayFolder: 04 Tableau final
+
+	measure 'Couleur vainqueur' = IF ( SUM ( F_EquipeMatch[Victoire] ) = 1, "#E8B84A", "#A9C4B8" )
+		lineageTag: fcfd0117-c3fa-59d3-a263-352ae7f20afc
+		displayFolder: 04 Tableau final
+
+	measure 'Champion' = CALCULATE ( SELECTEDVALUE ( D_Equipe[Équipe] ), D_Equipe[Ordre du parcours] = 1 )
+		lineageTag: d7a5dd61-28cb-5195-b9ea-36e2854a76aa
+		displayFolder: 04 Tableau final
+
+	measure 'Champion surnom' = CALCULATE ( SELECTEDVALUE ( D_Equipe[Surnom] ), D_Equipe[Ordre du parcours] = 1 )
+		lineageTag: c23b78af-e0de-5ec3-9eae-dd5a9656bc93
+		displayFolder: 04 Tableau final
+
+	measure 'Drapeau du champion' = CALCULATE ( SELECTEDVALUE ( D_Equipe[Drapeau] ), D_Equipe[Ordre du parcours] = 1 )
+		lineageTag: ddf86fff-779a-5389-b636-a76f204c9c3d
+		displayFolder: 04 Tableau final
+		dataCategory: ImageUrl
+
+	measure 'Finaliste' = CALCULATE ( SELECTEDVALUE ( D_Equipe[Équipe] ), D_Equipe[Ordre du parcours] = 2 )
+		lineageTag: b250078b-199f-5d06-a5e8-b6e2b856307d
+		displayFolder: 04 Tableau final
+
+	measure 'Troisième' = CALCULATE ( SELECTEDVALUE ( D_Equipe[Équipe] ), D_Equipe[Ordre du parcours] = 3 )
+		lineageTag: 9d72ac78-bb07-54c2-9d60-4f76c9a16bcc
+		displayFolder: 04 Tableau final
+
+	measure 'Affiche de la finale' = CALCULATE ( SELECTEDVALUE ( D_Match[Affiche] ), D_Match[Tour] = "Finale" )
+		lineageTag: 991c0525-d6f6-584e-bdde-70eea1950f65
+		displayFolder: 04 Tableau final
+
+	measure 'Ligne de la finale' = VAR code = CALCULATE ( SELECTEDVALUE ( D_Match[StadeCode] ), D_Match[Tour] = "Finale" ) RETURN CALCULATE ( SELECTEDVALUE ( D_Match[Date (texte)] ), D_Match[Tour] = "Finale" ) & " · " & LOOKUPVALUE ( D_Stade[Stade], D_Stade[StadeCode], code ) & " · " & FORMAT ( CALCULATE ( SUM ( D_Match[Affluence] ), D_Match[Tour] = "Finale" ), "#,0" ) & " spectateurs"
+		lineageTag: 0b00d55b-ac49-595b-ab35-12802aca409f
+		displayFolder: 04 Tableau final
+
+	measure 'Titre du champion' = "Champion d'Afrique · " & [Champion surnom]
+		lineageTag: ffb34471-8ec6-5f55-bdf5-c653cf638b2e
+		displayFolder: 04 Tableau final
+
+	measure 'Phase finale buts' = CALCULATE ( [Buts], D_Match[Phase] = "Élimination directe" )
+		formatString: 0
+		lineageTag: e05a68c3-f282-5024-ad3f-d7190b519757
+		displayFolder: 04 Tableau final
+
+	measure 'Phase finale matchs' = CALCULATE ( [Matchs], D_Match[Phase] = "Élimination directe" )
+		formatString: 0
+		lineageTag: 697288ca-5d8f-52eb-8c30-fb56b6c5d3f8
+		displayFolder: 04 Tableau final
+
+	measure 'Phase finale moyenne' = CALCULATE ( [Buts par match], D_Match[Phase] = "Élimination directe" )
+		formatString: 0.00
+		lineageTag: 351ae34e-38a1-5cd3-b7ee-7533e8908bc7
+		displayFolder: 04 Tableau final
+
+	measure 'Phase finale tab' = CALCULATE ( [Séances de tirs au but], D_Match[Phase] = "Élimination directe" )
+		formatString: 0
+		lineageTag: 078b807b-060c-5e7b-a1a8-909705f368f0
+		displayFolder: 04 Tableau final
+
+	measure 'Phase finale prolongations' = CALCULATE ( [Prolongations], D_Match[Phase] = "Élimination directe" )
+		formatString: 0
+		lineageTag: 38091a12-aeb1-51e7-82f6-e762b1cf941d
+		displayFolder: 04 Tableau final
+
+	/// Match sélectionné, la finale par défaut
+	measure 'Match choisi' = SELECTEDVALUE ( D_Match[N° match], 52 )
+		formatString: 0
+		lineageTag: 770a6e9e-c835-54c2-b218-767b1c8f1bb8
+		displayFolder: 05 Centre de match
+
+	measure 'MC Domicile' = VAR sel = [Match choisi] RETURN CALCULATE ( SELECTEDVALUE ( D_Match[Domicile] ), REMOVEFILTERS ( D_Match ), D_Match[N° match] = sel )
+		lineageTag: 89c4e0f8-499f-5fff-a560-3146849003ca
+		displayFolder: 05 Centre de match
+
+	measure 'MC Extérieur' = VAR sel = [Match choisi] RETURN CALCULATE ( SELECTEDVALUE ( D_Match[Extérieur] ), REMOVEFILTERS ( D_Match ), D_Match[N° match] = sel )
+		lineageTag: f0d508f5-cf94-560d-8357-8729cb30c2ed
+		displayFolder: 05 Centre de match
+
+	measure 'MC Score' = VAR sel = [Match choisi] RETURN CALCULATE ( SELECTEDVALUE ( D_Match[Score] ), REMOVEFILTERS ( D_Match ), D_Match[N° match] = sel )
+		lineageTag: 1577dd12-291a-5010-98db-58028b017260
+		displayFolder: 05 Centre de match
+
+	measure 'MC Tour' = VAR sel = [Match choisi] RETURN CALCULATE ( SELECTEDVALUE ( D_Match[Étiquette] ), REMOVEFILTERS ( D_Match ), D_Match[N° match] = sel )
+		lineageTag: 28a45b17-8012-57c2-8c3a-b865c868ded1
+		displayFolder: 05 Centre de match
+
+	measure 'MC Drapeau domicile' = VAR sel = [Match choisi] VAR t = LOOKUPVALUE ( D_Match[DomID], D_Match[N° match], sel ) RETURN LOOKUPVALUE ( D_Equipe[Drapeau], D_Equipe[Team_ID], t )
+		lineageTag: 334cee30-506d-590f-9fb9-76cb108784b8
+		displayFolder: 05 Centre de match
+		dataCategory: ImageUrl
+
+	measure 'MC Drapeau extérieur' = VAR sel = [Match choisi] VAR t = LOOKUPVALUE ( D_Match[ExtID], D_Match[N° match], sel ) RETURN LOOKUPVALUE ( D_Equipe[Drapeau], D_Equipe[Team_ID], t )
+		lineageTag: 76d7b2d8-a8bb-535b-9c69-ff8a7d8cdcc8
+		displayFolder: 05 Centre de match
+		dataCategory: ImageUrl
+
+	measure 'MC Issue' = VAR sel = [Match choisi] VAR v = LOOKUPVALUE ( D_Match[Vainqueur], D_Match[N° match], sel ) VAR tab = LOOKUPVALUE ( D_Match[Tirs au but], D_Match[N° match], sel ) VAR ap = LOOKUPVALUE ( D_Match[Prolongation], D_Match[N° match], sel ) RETURN IF ( v = "Match nul", "Match nul", v & " l'emporte" & IF ( tab = 1, " aux tirs au but", IF ( ap = 1, " après prolongation", "" ) ) )
+		lineageTag: 4038e105-01e4-5cf4-aaf4-06e282579620
+		displayFolder: 05 Centre de match
+
+	measure 'MC Infos' = VAR sel = [Match choisi] VAR code = LOOKUPVALUE ( D_Match[StadeCode], D_Match[N° match], sel ) RETURN LOOKUPVALUE ( D_Match[Date (texte)], D_Match[N° match], sel ) & " · " & LOOKUPVALUE ( D_Stade[Stade (court)], D_Stade[StadeCode], code ) & " · " & LOOKUPVALUE ( D_Stade[Ville], D_Stade[StadeCode], code )
+		lineageTag: b5f2f795-90f8-5925-b0c7-584c66c7238d
+		displayFolder: 05 Centre de match
+
+	measure 'MC Spectateurs' = VAR sel = [Match choisi] RETURN LOOKUPVALUE ( D_Match[Affluence], D_Match[N° match], sel )
+		formatString: #,0
+		lineageTag: 96bda932-35e1-5626-9c09-fc12ad267fcb
+		displayFolder: 05 Centre de match
+
+	measure 'MC Remplissage' = VAR sel = [Match choisi] VAR code = LOOKUPVALUE ( D_Match[StadeCode], D_Match[N° match], sel ) RETURN DIVIDE ( [MC Spectateurs], LOOKUPVALUE ( D_Stade[Capacité], D_Stade[StadeCode], code ) )
+		formatString: 0%
+		lineageTag: 4292654c-c28c-5f4a-bb52-a16674ec1808
+		displayFolder: 05 Centre de match
+
+	measure 'MC Arbitre' = VAR sel = [Match choisi] RETURN LOOKUPVALUE ( D_Match[Arbitre], D_Match[N° match], sel ) & " (" & LOOKUPVALUE ( D_Match[Pays de l'arbitre], D_Match[N° match], sel ) & ")"
+		lineageTag: 90455a19-26c0-5571-9324-636329307568
+		displayFolder: 05 Centre de match
+
+	measure 'MC Homme du match' = VAR sel = [Match choisi] RETURN LOOKUPVALUE ( D_Match[Homme du match], D_Match[N° match], sel )
+		lineageTag: 9f0710d4-c739-5a48-9c46-518c3cdd09b7
+		displayFolder: 05 Centre de match
+
+	measure 'MC Buts' = VAR sel = [Match choisi] RETURN CALCULATE ( [Buts], REMOVEFILTERS ( D_Match ), D_Match[N° match] = sel )
+		formatString: 0
+		lineageTag: 18a7cf84-7852-5597-b931-d421282748fb
+		displayFolder: 05 Centre de match
+
+	measure 'MC Cartons' = VAR sel = [Match choisi] RETURN CALCULATE ( [Cartons], REMOVEFILTERS ( D_Match ), D_Match[N° match] = sel )
+		formatString: 0
+		lineageTag: a1cc5555-7adc-5886-acfe-c4825cab9f18
+		displayFolder: 05 Centre de match
+
+	measure 'MC VAR' = VAR sel = [Match choisi] RETURN CALCULATE ( [Interventions VAR], REMOVEFILTERS ( D_Match ), D_Match[N° match] = sel )
+		formatString: 0
+		lineageTag: 59baba28-8953-5003-b869-1791c47324c6
+		displayFolder: 05 Centre de match
+
+	measure 'MC Remplacements' = VAR sel = [Match choisi] RETURN CALCULATE ( [Remplacements], REMOVEFILTERS ( D_Match ), D_Match[N° match] = sel )
+		formatString: 0
+		lineageTag: 449ae02d-4da7-5a75-9967-e0f8f9712829
+		displayFolder: 05 Centre de match
+
+	measure 'Valeur domicile' = CALCULATE ( SUM ( F_Stat[Valeur] ), F_Stat[Côté] = "Domicile" )
+		formatString: 0.#
+		lineageTag: 1ab71667-a6f7-5c99-bba7-c22367f7cc54
+		displayFolder: 05 Centre de match
+
+	measure 'Valeur extérieur' = CALCULATE ( SUM ( F_Stat[Valeur] ), F_Stat[Côté] = "Extérieur" )
+		formatString: 0.#
+		lineageTag: 1e715424-0c94-5169-b720-2aee19a325fa
+		displayFolder: 05 Centre de match
+
+	measure 'Drapeau du but' = VAR t = SELECTEDVALUE ( F_But[Team_ID] ) RETURN IF ( NOT ISBLANK ( t ), LOOKUPVALUE ( D_Equipe[Drapeau], D_Equipe[Team_ID], t ) )
+		lineageTag: b068ff62-c184-5949-a7e8-0080ad8eecca
+		displayFolder: 05 Centre de match
+		dataCategory: ImageUrl
+
+	measure 'Drapeau du carton' = VAR t = SELECTEDVALUE ( F_Carton[Team_ID] ) RETURN IF ( NOT ISBLANK ( t ), LOOKUPVALUE ( D_Equipe[Drapeau], D_Equipe[Team_ID], t ) )
+		lineageTag: bfb5e112-0287-5f38-9a8c-ff5249668ef2
+		displayFolder: 05 Centre de match
+		dataCategory: ImageUrl
+
+	measure 'Couleur du carton' = IF ( SELECTEDVALUE ( F_Carton[Carton] ) = "Rouge", "#E5484D", "#F5C842" )
+		lineageTag: fc00c991-ff3c-5cc8-90d1-2c0298d6488e
+		displayFolder: 05 Centre de match
+
+	/// Nation sélectionnée, le champion par défaut
+	measure 'Équipe choisie' = SELECTEDVALUE ( D_Equipe[Team_ID], 3 )
+		formatString: 0
+		lineageTag: 3b89d614-5ee2-5de2-b26a-be1ea254767a
+		displayFolder: 06 Parcours
+
+	measure 'PC Nom' = VAR sel = [Équipe choisie] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Équipe] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		lineageTag: e93de83e-5b48-54c4-98d3-2e567ac145cc
+		displayFolder: 06 Parcours
+
+	measure 'PC Surnom' = VAR sel = [Équipe choisie] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Surnom] ) & " · " & SELECTEDVALUE ( D_Equipe[Groupe] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		lineageTag: e7d3f7ce-2f45-5289-9d34-b29354f13402
+		displayFolder: 06 Parcours
+
+	measure 'PC Drapeau' = VAR sel = [Équipe choisie] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Drapeau] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		lineageTag: 81d602a4-0541-599b-a3cf-3f7ff5974e05
+		displayFolder: 06 Parcours
+		dataCategory: ImageUrl
+
+	measure 'PC Parcours' = VAR sel = [Équipe choisie] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Parcours] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		lineageTag: 00576192-d381-5c6e-89ff-aa6512579380
+		displayFolder: 06 Parcours
+
+	measure 'PC Matchs' = VAR sel = [Équipe choisie] RETURN CALCULATE ( [Matchs joués], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		formatString: 0
+		lineageTag: aa6198cf-287e-54f0-b51c-30c683609f3f
+		displayFolder: 06 Parcours
+
+	measure 'PC Bilan' = VAR sel = [Équipe choisie] RETURN CALCULATE ( FORMAT ( [Victoires], "0" ) & " V · " & FORMAT ( [Nuls], "0" ) & " N · " & FORMAT ( [Défaites], "0" ) & " D", REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		lineageTag: acd55554-f553-5134-8e82-533d770d6d91
+		displayFolder: 06 Parcours
+
+	measure 'PC Buts marqués' = VAR sel = [Équipe choisie] RETURN CALCULATE ( [Buts marqués], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		formatString: 0
+		lineageTag: fd1a1d95-ea90-5dab-b570-e98b35863aac
+		displayFolder: 06 Parcours
+
+	measure 'PC Buts encaissés' = VAR sel = [Équipe choisie] RETURN CALCULATE ( [Buts encaissés], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		formatString: 0
+		lineageTag: 77088f84-2704-5dba-a677-8406d5388f2e
+		displayFolder: 06 Parcours
+
+	measure 'PC Possession' = VAR sel = [Équipe choisie] RETURN CALCULATE ( [Possession moyenne], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		formatString: 0" %"
+		lineageTag: 0b4a3893-fefd-5062-86a9-19d512250021
+		displayFolder: 06 Parcours
+
+	measure 'PC Spectateurs' = VAR sel = [Équipe choisie] RETURN CALCULATE ( SUMX ( F_EquipeMatch, RELATED ( D_Match[Affluence] ) ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		formatString: #,0
+		lineageTag: b0b62895-9744-5ab1-be43-c9c6559f8c28
+		displayFolder: 06 Parcours
+
+	measure 'PC Cartons' = VAR sel = [Équipe choisie] RETURN CALCULATE ( [Cartons], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		formatString: 0
+		lineageTag: 7d6ff5ba-4ddb-54fb-ab36-e3cf63357da2
+		displayFolder: 06 Parcours
+
+	measure 'PC Réalisations' = VAR sel = [Équipe choisie] RETURN CALCULATE ( [Réalisations], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		formatString: 0
+		lineageTag: 64340b12-bb62-534b-b024-edae1461a956
+		displayFolder: 06 Parcours
+
+	measure 'PC Match' = VAR sel = [Équipe choisie] RETURN CALCULATE ( SELECTEDVALUE ( F_EquipeMatch[Match_ID] ), REMOVEFILTERS ( D_Equipe ), F_EquipeMatch[Team_ID] = sel )
+		formatString: 0
+		lineageTag: a2849892-08a5-5e74-88e9-2d5c822a7836
+		displayFolder: 06 Parcours
+
+	measure 'PC Visible' = IF ( NOT ISBLANK ( [PC Match] ), 1 )
+		formatString: 0
+		lineageTag: 03ad615f-f5dc-55e3-8637-cd6b7199f06e
+		displayFolder: 06 Parcours
+
+	measure 'PC Date' = VAR mt = [PC Match] RETURN IF ( NOT ISBLANK ( mt ), LOOKUPVALUE ( D_Match[Jour], D_Match[N° match], mt ) )
+		lineageTag: deb36417-9118-52eb-82a8-3130cf8f470b
+		displayFolder: 06 Parcours
+
+	measure 'PC Nation adverse' = VAR sel = [Équipe choisie] VAR a = CALCULATE ( SELECTEDVALUE ( F_EquipeMatch[AdvID] ), REMOVEFILTERS ( D_Equipe ), F_EquipeMatch[Team_ID] = sel ) RETURN IF ( NOT ISBLANK ( a ), LOOKUPVALUE ( D_Equipe[Drapeau], D_Equipe[Team_ID], a ) )
+		lineageTag: 1e9a608f-8ec8-5214-a1af-8093a2d6ad8b
+		displayFolder: 06 Parcours
+		dataCategory: ImageUrl
+
+	measure 'PC Adversaire' = VAR sel = [Équipe choisie] RETURN CALCULATE ( SELECTEDVALUE ( F_EquipeMatch[Adversaire] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		lineageTag: 160e7c4e-a649-5181-bd1c-a263a764094b
+		displayFolder: 06 Parcours
+
+	measure 'PC Score' = VAR sel = [Équipe choisie] RETURN CALCULATE ( SELECTEDVALUE ( F_EquipeMatch[Score équipe] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		lineageTag: 0af40b6a-0590-5fd6-9c5d-be1eb3a73492
+		displayFolder: 06 Parcours
+
+	measure 'PC Résultat' = VAR sel = [Équipe choisie] RETURN CALCULATE ( SELECTEDVALUE ( F_EquipeMatch[Résultat] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		lineageTag: 2247cc0d-6635-54bb-9664-8060309ff62e
+		displayFolder: 06 Parcours
+
+	measure 'PC Couleur résultat' = VAR r = [PC Résultat] RETURN SWITCH ( TRUE (), LEFT ( r, 8 ) = "Victoire", "#2FBF71", LEFT ( r, 7 ) = "Défaite", "#E5484D", "#E8B84A" )
+		lineageTag: 39506b66-c19b-5c4a-94e7-ac8944566c20
+		displayFolder: 06 Parcours
+
+	measure 'PC Stade' = VAR mt = [PC Match] VAR code = LOOKUPVALUE ( D_Match[StadeCode], D_Match[N° match], mt ) RETURN IF ( NOT ISBLANK ( mt ), LOOKUPVALUE ( D_Stade[Stade (court)], D_Stade[StadeCode], code ) )
+		lineageTag: d1c9079f-aae4-51e7-90ec-d38def1aa982
+		displayFolder: 06 Parcours
+
+	measure 'PC Affluence' = VAR mt = [PC Match] RETURN IF ( NOT ISBLANK ( mt ), LOOKUPVALUE ( D_Match[Affluence], D_Match[N° match], mt ) )
+		formatString: #,0
+		lineageTag: 8426ebeb-a047-5a22-8b20-f99406c1c7da
+		displayFolder: 06 Parcours
+
+	measure 'PC Homme du match' = VAR mt = [PC Match] RETURN IF ( NOT ISBLANK ( mt ), LOOKUPVALUE ( D_Match[Homme du match], D_Match[N° match], mt ) )
+		lineageTag: 813c5f01-fe43-5176-b82d-ad624d8d3729
+		displayFolder: 06 Parcours
+
+	measure 'PC Moyenne équipe' = VAR sel = [Équipe choisie] RETURN CALCULATE ( AVERAGE ( F_Stat[Valeur] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = sel )
+		formatString: 0.0
+		lineageTag: 1d56e399-723c-5b5a-9d9d-c344d9442b56
+		displayFolder: 06 Parcours
+
+	measure 'Moyenne CAN' = CALCULATE ( AVERAGE ( F_Stat[Valeur] ), REMOVEFILTERS ( D_Equipe ) )
+		formatString: 0.0
+		lineageTag: ce867841-0c85-59a8-bb58-4d8498afeac4
+		displayFolder: 06 Parcours
+
+	measure 'PC Écart' = DIVIDE ( [PC Moyenne équipe] - [Moyenne CAN], [Moyenne CAN] )
+		formatString: +0%;-0%;0%
+		lineageTag: 022b4b39-c57c-56be-a5b5-7cf2bdf5bf3d
+		displayFolder: 06 Parcours
+
+	measure 'PC Couleur écart' = VAR e = [PC Écart] VAR inv = SELECTEDVALUE ( F_Stat[Statistique] ) IN { "Fautes", "Hors-jeu", "Cartons jaunes", "Cartons rouges" } VAR bon = IF ( inv, e < 0, e > 0 ) RETURN IF ( ABS ( e ) < 0.02, "#A9C4B8", IF ( bon, "#2FBF71", "#E5484D" ) )
+		lineageTag: a5dfcd01-694e-5eab-b96b-fabe5e819783
+		displayFolder: 06 Parcours
+
+	measure 'Buteurs (3 buts et plus)' = IF ( [Réalisations] >= 3, [Réalisations] )
+		formatString: 0
+		lineageTag: 61a4278b-51e3-5d2b-9258-3f2fcf0df8af
+		displayFolder: 07 Buteurs
+
+	measure 'Meilleur buteur' = VAR t = TOPN ( 1, ADDCOLUMNS ( VALUES ( F_But[Buteur] ), "@b", [Réalisations] ), [@b], DESC ) RETURN MAXX ( t, F_But[Buteur] )
+		lineageTag: ba462172-36e8-582d-a9ff-8a52b24c56b9
+		displayFolder: 07 Buteurs
+
+	measure 'Meilleur buteur ligne' = VAR nom = [Meilleur buteur] VAR b = MAXX ( VALUES ( F_But[Buteur] ), [Réalisations] ) VAR t = CALCULATE ( MAX ( F_But[Team_ID] ), F_But[Buteur] = nom ) RETURN FORMAT ( b, "0" ) & " buts · " & LOOKUPVALUE ( D_Equipe[Équipe], D_Equipe[Team_ID], t )
+		lineageTag: 3121dfdf-1e6d-548b-b6a8-70d854f285df
+		displayFolder: 07 Buteurs
+
+	measure 'But le plus rapide' = VAR t = TOPN ( 1, F_But, F_But[Tri minute], ASC ) RETURN MAXX ( t, F_But[Minute (texte)] )
+		lineageTag: 22e55f0f-4d4b-590c-86f6-7fd1e946c824
+		displayFolder: 07 Buteurs
+
+	measure 'But le plus rapide ligne' = VAR t = TOPN ( 1, F_But, F_But[Tri minute], ASC ) VAR mt = MAXX ( t, F_But[Match_ID] ) RETURN MAXX ( t, F_But[Buteur] ) & " · " & LOOKUPVALUE ( D_Match[Affiche], D_Match[N° match], mt )
+		lineageTag: 32012f8c-356b-551b-a52c-cacb1f03c5de
+		displayFolder: 07 Buteurs
+
+	measure 'But le plus tardif' = VAR t = TOPN ( 1, F_But, F_But[Tri minute], DESC ) RETURN MAXX ( t, F_But[Minute (texte)] )
+		lineageTag: bd06073c-d525-5705-9885-9da4812f1390
+		displayFolder: 07 Buteurs
+
+	measure 'But le plus tardif ligne' = VAR t = TOPN ( 1, F_But, F_But[Tri minute], DESC ) VAR mt = MAXX ( t, F_But[Match_ID] ) RETURN MAXX ( t, F_But[Buteur] ) & " · " & LOOKUPVALUE ( D_Match[Affiche], D_Match[N° match], mt )
+		lineageTag: 1b4071b6-46fc-5371-8346-bd1522a377c0
+		displayFolder: 07 Buteurs
+
+	measure 'But le plus rapide buteur' = VAR t = TOPN ( 1, F_But, F_But[Tri minute], ASC ) RETURN MAXX ( t, F_But[Buteur (équipe)] )
+		lineageTag: f427baeb-39ce-5125-a3e4-c8d0a65c9e72
+		displayFolder: 07 Buteurs
+
+	measure 'But le plus rapide match' = VAR t = TOPN ( 1, F_But, F_But[Tri minute], ASC ) RETURN LOOKUPVALUE ( D_Match[Affiche (courte)], D_Match[N° match], MAXX ( t, F_But[Match_ID] ) )
+		lineageTag: 0e129384-5e0a-5399-bd24-c30f644ffa53
+		displayFolder: 07 Buteurs
+
+	measure 'But le plus tardif buteur' = VAR t = TOPN ( 1, F_But, F_But[Tri minute], DESC ) RETURN MAXX ( t, F_But[Buteur (équipe)] )
+		lineageTag: 9546e3ce-d358-5b56-aa8d-94c9876322f4
+		displayFolder: 07 Buteurs
+
+	measure 'But le plus tardif match' = VAR t = TOPN ( 1, F_But, F_But[Tri minute], DESC ) RETURN LOOKUPVALUE ( D_Match[Affiche (courte)], D_Match[N° match], MAXX ( t, F_But[Match_ID] ) )
+		lineageTag: cb8432ca-f3e7-5c62-81cf-e0a9fea7f66c
+		displayFolder: 07 Buteurs
+
+	measure 'Plus large victoire 1' = VAR mx = MAX ( D_Match[Écart] ) VAR t = TOPN ( 1, FILTER ( D_Match, D_Match[Écart] = mx ), D_Match[N° match], ASC ) RETURN MAXX ( t, D_Match[Affiche (courte)] )
+		lineageTag: 0779a321-0feb-5c7c-b6ed-11f5c5331ad1
+		displayFolder: 07 Buteurs
+
+	measure 'Plus large victoire 2' = VAR mx = MAX ( D_Match[Écart] ) VAR t = TOPN ( 1, FILTER ( D_Match, D_Match[Écart] = mx ), D_Match[N° match], DESC ) VAR a = MAXX ( t, D_Match[Affiche (courte)] ) RETURN IF ( a = [Plus large victoire 1], " ", a )
+		lineageTag: 9e4d9062-a966-5d88-ab2a-783e65075a53
+		displayFolder: 07 Buteurs
+
+	measure 'Plus large écart' = MAX ( D_Match[Écart] )
+		formatString: 0
+		lineageTag: 7d724ca6-e465-5e0f-8954-abf6cb5b7036
+		displayFolder: 07 Buteurs
+
+	measure 'Plus large victoire' = VAR mx = MAX ( D_Match[Écart] ) RETURN "+" & FORMAT ( mx, "0" )
+		lineageTag: 889f1cbb-ccd7-5b92-b21e-566467d0f7bf
+		displayFolder: 07 Buteurs
+
+	measure 'Plus large victoire ligne' = VAR mx = MAX ( D_Match[Écart] ) RETURN CONCATENATEX ( FILTER ( D_Match, D_Match[Écart] = mx ), D_Match[Affiche], " · ", D_Match[N° match], ASC )
+		lineageTag: c6be4abf-8e52-5d43-8f5f-9fae62f0b8ed
+		displayFolder: 07 Buteurs
+
+	measure 'Équipes les plus prolifiques' = IF ( RANKX ( ALLSELECTED ( D_Equipe[Équipe] ), [Buts marqués], , DESC, Dense ) <= 6, [Buts marqués] )
+		formatString: 0
+		lineageTag: 57ccf65a-b5ba-5ee6-afa9-45f492eb8b0e
+		displayFolder: 07 Buteurs
+
+	measure 'Record affluence ligne' = VAR mx = MAX ( D_Match[Affluence] ) RETURN MAXX ( FILTER ( D_Match, D_Match[Affluence] = mx ), D_Match[Étiquette] & " · " & D_Match[Affiche] )
+		lineageTag: 5b9da0dd-c791-5479-b171-07264177a738
+		displayFolder: 08 Stades
+
+	measure 'Capacité totale' = SUM ( D_Stade[Capacité] )
+		formatString: #,0
+		lineageTag: 5b5354e7-9eed-5762-9b27-cebda6d17a28
+		displayFolder: 08 Stades
+
+	measure 'Arbitre à 3 matchs ou plus' = IF ( CALCULATE ( [Matchs], REMOVEFILTERS ( D_Match[Phase] ) ) >= 3 && [Matchs] > 0, 1 )
+		formatString: 0
+		lineageTag: 8c9c208d-d410-50a7-a5b0-ec1bab0fc88f
+		displayFolder: 09 Discipline
+
+	measure 'Cartons par match (arbitre)' = DIVIDE ( [Cartons], [Matchs] )
+		formatString: 0.0
+		lineageTag: fc2210a1-7141-53b7-969a-fafa0f59b304
+		displayFolder: 09 Discipline
+
+	measure 'Spectateurs (M)' = DIVIDE ( [Spectateurs], 1000000 )
+		formatString: 0.00" M"
+		lineageTag: b8ea8360-4573-5844-a204-23066f85ffb5
+		displayFolder: 01 Tournoi
+
+	measure 'Bilan' = FORMAT ( [Victoires], "0" ) & " - " & FORMAT ( [Nuls], "0" ) & " - " & FORMAT ( [Défaites], "0" )
+		lineageTag: 56581aac-ff3d-57fe-b90b-454dfcfaf3ed
+		displayFolder: 02 Équipes
+
+	measure 'Sous-titre buts' = FORMAT ( [Penalties marqués], "0" ) & " penalties · " & FORMAT ( [Buts contre son camp], "0" ) & " csc"
+		lineageTag: 3ed27e07-a819-5bc0-994c-0784494b4b55
+		displayFolder: 01 Tournoi
+
+	measure 'Type court' = SWITCH ( SELECTEDVALUE ( F_But[Type de but] ), "Penalty", "pen.", "Contre son camp", "csc", "" )
+		lineageTag: 393d8cf7-6364-5cd9-a40e-265ef6d61a5b
+		displayFolder: 05 Centre de match
+
+	measure 'But du match choisi' = IF ( MAX ( F_But[Match_ID] ) = [Match choisi], 1 )
+		formatString: 0
+		lineageTag: 5ba3262a-0634-591c-9569-47243bd36455
+		displayFolder: 05 Centre de match
+
+	measure 'Carton du match choisi' = IF ( MAX ( F_Carton[Match_ID] ) = [Match choisi], 1 )
+		formatString: 0
+		lineageTag: e36136d4-1195-552f-aa56-d1e7df7c439f
+		displayFolder: 05 Centre de match
+
+	measure 'Duel domicile' = VAR sel = [Match choisi] RETURN CALCULATE ( SUM ( F_Stat[Valeur] ), REMOVEFILTERS ( D_Match ), F_Stat[Match_ID] = sel, F_Stat[Côté] = "Domicile" )
+		formatString: 0.#
+		lineageTag: 21f209f1-2ed2-5be5-862c-844eedd52c2b
+		displayFolder: 05 Centre de match
+
+	measure 'Duel extérieur' = VAR sel = [Match choisi] RETURN CALCULATE ( SUM ( F_Stat[Valeur] ), REMOVEFILTERS ( D_Match ), F_Stat[Match_ID] = sel, F_Stat[Côté] = "Extérieur" )
+		formatString: 0.#
+		lineageTag: 425c8176-293c-5b2c-8045-263c75492bd3
+		displayFolder: 05 Centre de match
+
+	measure 'Spectateurs par match (stade)' = DIVIDE ( [Spectateurs], [Matchs] )
+		formatString: #,0
+		lineageTag: 12319c50-b58f-547c-8f27-79459fa39023
+		displayFolder: 08 Stades
+
+	measure 'Stades et villes' = FORMAT ( [Stades], "0" ) & " / " & FORMAT ( [Villes hôtes], "0" )
+		lineageTag: 13270c2b-7cce-5d75-be7e-ff6697ff74a2
+		displayFolder: 08 Stades
+
+	measure 'Rang cartons' = IF ( HASONEVALUE ( D_Equipe[Team_ID] ), RANKX ( ALL ( D_Equipe ), [Cartons] * 100 + MAX ( D_Equipe[Team_ID] ), , DESC ) )
+		formatString: 0
+		lineageTag: d4fb078e-b073-5e56-8728-e640a01f81ff
+		displayFolder: 09 Discipline
+
+	measure 'Jaunes (top 12)' = IF ( [Rang cartons] <= 12, [Jaunes] )
+		formatString: 0
+		lineageTag: fc7abc43-afd3-561e-8f7f-a094c69eb0f5
+		displayFolder: 09 Discipline
+
+	measure 'Rouges (top 12)' = IF ( [Rang cartons] <= 12, [Rouges] )
+		formatString: 0
+		lineageTag: 2c8bd6bb-8a63-53ea-b15f-3512797ffc09
+		displayFolder: 09 Discipline
+
+	measure 'Rang affluence' = IF ( HASONEVALUE ( D_Match[N° match] ), RANKX ( ALL ( D_Match ), CALCULATE ( SUM ( D_Match[Affluence] ) ), , DESC ) )
+		formatString: 0
+		lineageTag: 9ba626a3-d3fa-5e09-b05f-24caa26c6a4b
+		displayFolder: 08 Stades
+
+	measure 'Jours de match' = DISTINCTCOUNT ( D_Match[Date] )
+		formatString: 0
+		lineageTag: ddb341cd-04f8-556a-8099-e8d501d50f52
+		displayFolder: 11 Fil du tournoi
+
+	measure 'Buts par jour de match' = DIVIDE ( [Buts], [Jours de match] )
+		formatString: 0.0
+		lineageTag: f7e6df7a-b26d-5a3f-9592-61f710951fb7
+		displayFolder: 11 Fil du tournoi
+
+	measure 'Buts cumulés' = VAR d = MAX ( D_Match[Date] ) RETURN CALCULATE ( [Buts], FILTER ( ALL ( D_Match ), D_Match[Date] <= d ) )
+		formatString: 0
+		lineageTag: 4a33b1c2-1494-5d2e-b14a-698542f3e27c
+		displayFolder: 11 Fil du tournoi
+
+	measure 'Spectateurs cumulés (M)' = VAR d = MAX ( D_Match[Date] ) RETURN CALCULATE ( DIVIDE ( [Spectateurs], 1000000 ), FILTER ( ALL ( D_Match ), D_Match[Date] <= d ) )
+		formatString: 0.00" M"
+		lineageTag: 9d62df2c-6e9e-5880-9c4d-7fc1805f9fab
+		displayFolder: 11 Fil du tournoi
+
+	measure 'Journée record' = VAR t = TOPN ( 1, ADDCOLUMNS ( VALUES ( D_Match[Date] ), "@b", [Buts] ), [@b], DESC, D_Match[Date], ASC ) RETURN FORMAT ( MAXX ( t, [@b] ), "0" ) & " buts"
+		lineageTag: 520ec4bf-9064-5683-b44a-732d97f5455e
+		displayFolder: 11 Fil du tournoi
+
+	measure 'Journée record ligne' = VAR t = TOPN ( 1, ADDCOLUMNS ( VALUES ( D_Match[Date] ), "@b", [Buts] ), [@b], DESC, D_Match[Date], ASC ) VAR d = MAXX ( t, D_Match[Date] ) RETURN "le " & FORMAT ( d, "d mmmm" )
+		lineageTag: 7cbcb0a0-3165-5f2c-a57b-baf51ce6f339
+		displayFolder: 11 Fil du tournoi
+
+	measure 'Match le plus prolifique' = MAX ( D_Match[Buts du match] )
+		formatString: 0
+		lineageTag: 9fd6be50-e8e9-5306-938a-9b6631597c99
+		displayFolder: 11 Fil du tournoi
+
+	measure 'Match le plus prolifique ligne' = VAR mx = MAX ( D_Match[Buts du match] ) RETURN MAXX ( TOPN ( 1, FILTER ( D_Match, D_Match[Buts du match] = mx ), D_Match[N° match], ASC ), D_Match[Affiche (courte)] )
+		lineageTag: 7f97b445-7a1f-5481-b874-3fe3637e8dab
+		displayFolder: 11 Fil du tournoi
+
+	measure 'Rang prolifique' = IF ( HASONEVALUE ( D_Match[N° match] ), RANKX ( ALL ( D_Match ), CALCULATE ( MAX ( D_Match[Buts du match] ) ) * 100 - CALCULATE ( MAX ( D_Match[N° match] ) ), , DESC ) )
+		formatString: 0
+		lineageTag: b22801c1-4dc4-5a03-a960-5cf9f05dc59c
+		displayFolder: 11 Fil du tournoi
+
+	measure 'Matchs sans but' = CALCULATE ( COUNTROWS ( D_Match ), D_Match[Buts du match] = 0 ) + 0
+		formatString: 0
+		lineageTag: e1b9e43a-5065-5bcd-940c-aa3a08feb181
+		displayFolder: 11 Fil du tournoi
+
+	/// Nation A du duel, la Côte d'Ivoire par défaut
+	measure 'Choix A' = SELECTEDVALUE ( DuelA[Id DuelA], 3 )
+		formatString: 0
+		lineageTag: a704589e-06a0-503e-8a20-8041e70e4de5
+		displayFolder: 12 Duel de nations
+
+	/// Nation B du duel, le Nigeria par défaut
+	measure 'Choix B' = SELECTEDVALUE ( DuelB[Id DuelB], 2 )
+		formatString: 0
+		lineageTag: f7e92ce3-6a0a-58cb-98a4-51c8a92315e4
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Nom' = VAR t = [Choix A] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Équipe] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: 5646f7ab-5667-58da-a71a-df6096bddbb7
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Surnom' = VAR t = [Choix A] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Surnom] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: 0c970460-716d-5ddc-baab-d3fcb7486708
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Drapeau' = VAR t = [Choix A] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Drapeau] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: bf0af6be-cdc5-5a80-99b0-beaebedc2e3a
+		displayFolder: 12 Duel de nations
+		dataCategory: ImageUrl
+
+	measure 'DA Parcours' = VAR t = [Choix A] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Parcours] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: f0210257-673e-5da2-a821-a7e9acc98fd3
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Matchs' = VAR t = [Choix A] RETURN CALCULATE ( [Matchs joués], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: 5f915c4e-0272-58fd-99aa-f68fe24259df
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Bilan' = VAR t = [Choix A] RETURN CALCULATE ( FORMAT ( [Victoires], "0" ) & " V · " & FORMAT ( [Nuls], "0" ) & " N · " & FORMAT ( [Défaites], "0" ) & " D", REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: 082883fd-9338-5f62-9081-9c6582723a96
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Buts marqués' = VAR t = [Choix A] RETURN CALCULATE ( [Buts marqués], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: 4cf621a4-6ee6-5ffe-bfe7-b8717f161033
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Buts encaissés' = VAR t = [Choix A] RETURN CALCULATE ( [Buts encaissés], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: 94412e08-f587-5dc2-90db-4e48788ca8ca
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Clean sheets' = VAR t = [Choix A] RETURN CALCULATE ( [Clean sheets], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: 6235f74f-2f75-552a-87c8-222fb477943a
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Possession' = VAR t = [Choix A] RETURN CALCULATE ( [Possession moyenne], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0" %"
+		lineageTag: 4bf23970-5aad-541b-ad31-2814bee3e442
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Tirs par match' = VAR t = [Choix A] RETURN CALCULATE ( [Tirs par match], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0.0
+		lineageTag: ca6bc095-ebba-526e-8732-4fffacead72f
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Cartons' = VAR t = [Choix A] RETURN CALCULATE ( [Cartons], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: 47d69597-ae8b-5c9c-9cba-3a0b8a0bd634
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Spectateurs' = VAR t = [Choix A] RETURN CALCULATE ( SUMX ( F_EquipeMatch, RELATED ( D_Match[Affluence] ) ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: #,0
+		lineageTag: cb3c9f19-03c2-54eb-a58d-2186741ff186
+		displayFolder: 12 Duel de nations
+
+	measure 'DA Profil' = VAR t = [Choix A] RETURN CALCULATE ( AVERAGE ( F_Stat[Valeur] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0.0
+		lineageTag: f776ba41-1184-5bf4-a9ee-8c5fdf52e193
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Nom' = VAR t = [Choix B] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Équipe] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: 02651f1d-8b09-5523-8f48-8424e32c90fb
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Surnom' = VAR t = [Choix B] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Surnom] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: a2c772a0-14b5-5951-a1e6-6ef7b02b7c2c
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Drapeau' = VAR t = [Choix B] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Drapeau] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: f6f8c080-4ff7-57a2-a2cc-31419653926e
+		displayFolder: 12 Duel de nations
+		dataCategory: ImageUrl
+
+	measure 'DB Parcours' = VAR t = [Choix B] RETURN CALCULATE ( SELECTEDVALUE ( D_Equipe[Parcours] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: 2607eee9-d3c8-5875-8ee8-2a3e5b885877
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Matchs' = VAR t = [Choix B] RETURN CALCULATE ( [Matchs joués], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: e4483b70-af2e-503f-bc92-ceb729b54c5c
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Bilan' = VAR t = [Choix B] RETURN CALCULATE ( FORMAT ( [Victoires], "0" ) & " V · " & FORMAT ( [Nuls], "0" ) & " N · " & FORMAT ( [Défaites], "0" ) & " D", REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		lineageTag: 9235cc99-2b7a-5911-90b3-13f69e78824a
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Buts marqués' = VAR t = [Choix B] RETURN CALCULATE ( [Buts marqués], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: 0254a25a-5b5a-5c74-a8a0-8a8f915924fb
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Buts encaissés' = VAR t = [Choix B] RETURN CALCULATE ( [Buts encaissés], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: 79e1ffef-49b2-596b-b56c-e14084ec0b71
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Clean sheets' = VAR t = [Choix B] RETURN CALCULATE ( [Clean sheets], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: bdf2d47d-822f-50f7-bd62-06d1e8b3cdb3
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Possession' = VAR t = [Choix B] RETURN CALCULATE ( [Possession moyenne], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0" %"
+		lineageTag: 45195d38-e955-5283-bc02-2f231492fd90
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Tirs par match' = VAR t = [Choix B] RETURN CALCULATE ( [Tirs par match], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0.0
+		lineageTag: fa69a7d7-d526-51ec-901e-59ba32a3eede
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Cartons' = VAR t = [Choix B] RETURN CALCULATE ( [Cartons], REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0
+		lineageTag: 8c34cc8e-b757-5db8-b843-6c58c7040d80
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Spectateurs' = VAR t = [Choix B] RETURN CALCULATE ( SUMX ( F_EquipeMatch, RELATED ( D_Match[Affluence] ) ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: #,0
+		lineageTag: c62d921c-8778-5f15-a5f9-967a4e3ae2ae
+		displayFolder: 12 Duel de nations
+
+	measure 'DB Profil' = VAR t = [Choix B] RETURN CALCULATE ( AVERAGE ( F_Stat[Valeur] ), REMOVEFILTERS ( D_Equipe ), D_Equipe[Team_ID] = t )
+		formatString: 0.0
+		lineageTag: b1403010-7c16-5b6d-9045-e9229d5738bf
+		displayFolder: 12 Duel de nations
+
+	measure 'Confrontation directe' = VAR a = [Choix A] VAR b = [Choix B] VAR ms = FILTER ( ALL ( D_Match ), ( D_Match[DomID] = a && D_Match[ExtID] = b ) || ( D_Match[DomID] = b && D_Match[ExtID] = a ) ) RETURN IF ( a = b, "Choisissez deux nations différentes", IF ( COUNTROWS ( ms ) = 0, "Aucune confrontation directe pendant le tournoi", CONCATENATEX ( ms, D_Match[Étiquette] & " : " & D_Match[Affiche], " · ", D_Match[N° match], ASC ) ) )
+		lineageTag: a5e9ddd5-0432-52e5-b1ac-6fa535c5a04f
+		displayFolder: 12 Duel de nations
+
+	measure 'Couleur statut' = IF ( SELECTEDVALUE ( D_Equipe[Statut] ) = "Qualifiée", "#F6F1E6", "#7F9E91" )
+		lineageTag: 39547277-b9e5-5c29-84a1-b173d5df6642
+		displayFolder: 10 Textes et couleurs
+
+	measure 'Couleur qualifiée' = IF ( SELECTEDVALUE ( D_Equipe[Statut] ) = "Qualifiée", "#2FBF71", "#7F9E91" )
+		lineageTag: 4f1e773a-2ec5-568e-a440-7e49ae6a0f48
+		displayFolder: 10 Textes et couleurs
+
+	measure 'Couleur parcours' = SWITCH ( MAX ( D_Equipe[Ordre du parcours] ), 1, "#E8B84A", 2, "#F6F1E6", 3, "#F28C1E", 4, "#F28C1E", "#A9C4B8" )
+		lineageTag: 232cd798-7e6b-52e8-9c54-f784aad23702
+		displayFolder: 10 Textes et couleurs
+
+	measure 'Couleur équipe' = SELECTEDVALUE ( D_Equipe[Couleur], "#F28C1E" )
+		lineageTag: 8d8d1e67-8ec7-5ec1-9544-956077ae5a3b
+		displayFolder: 10 Textes et couleurs
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: 74c75eb2-dec1-5e30-b6d8-d8b6cee33e95
+		summarizeBy: none
+		sourceColumn: [Placeholder]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metrics = calculated
+		mode: import
+		source = ROW ( "Placeholder", "" )
+
+	annotation PBI_Id = Metrics

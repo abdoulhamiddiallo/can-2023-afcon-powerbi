@@ -1,0 +1,92 @@
+table F_VAR
+	lineageTag: 176270b0-32d7-514d-9139-e46503ad2676
+
+	column Var_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 19decedd-69a3-58b7-999b-92dd5b3ee4a4
+		summarizeBy: none
+		sourceColumn: Var_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Match_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 002a8abd-b019-5a60-99bd-4f2c86afc9e5
+		summarizeBy: none
+		sourceColumn: Match_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 4a0a3e8d-e4cf-50e2-b70e-e974811dea98
+		summarizeBy: none
+		sourceColumn: Team_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Décision VAR'
+		dataType: string
+		lineageTag: 2b61947a-9ce8-5170-927b-f2c193cb16bb
+		summarizeBy: none
+		sourceColumn: Decision
+
+		annotation SummarizationSetBy = Automatic
+
+	column Minute
+		dataType: int64
+		formatString: 0
+		lineageTag: 2741df9b-40cd-544a-bf3b-fb88ab611276
+		summarizeBy: none
+		sourceColumn: Minute
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Minute (texte)'
+		dataType: string
+		lineageTag: 3bd113da-e54d-5957-b475-d7b420eed26f
+		summarizeBy: none
+		sourceColumn: MinuteTexte
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_VAR = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    Matches0 = Source{[Schema = "dbo", Item = "Matches"]}[Data],
+				    Teams0 = Source{[Schema = "dbo", Item = "Teams"]}[Data],
+				    Cles = Record.FromList(List.Transform(Teams0[Team_ID], each Int64.From(_)), List.Transform(Teams0[Team_Name], each Text.Lower(Text.Trim(_)))),
+				    IdDe = (nom as text) as number => Record.Field(Cles, Text.Lower(Text.Trim(nom))),
+				    Noms = Record.FromList({"Guinée équatoriale", "Nigeria", "Côte d'Ivoire", "Guinée-Bissau", "Cap-Vert", "Égypte", "Ghana", "Mozambique", "Sénégal", "Cameroun", "Guinée", "Gambie", "Angola", "Burkina Faso", "Mauritanie", "Algérie", "Mali", "Afrique du Sud", "Namibie", "Tunisie", "Maroc", "RD Congo", "Zambie", "Tanzanie"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Codes = Record.FromList({"GNQ", "NGA", "CIV", "GNB", "CPV", "EGY", "GHA", "MOZ", "SEN", "CMR", "GIN", "GMB", "AGO", "BFA", "MRT", "DZA", "MLI", "ZAF", "NAM", "TUN", "MAR", "COD", "ZMB", "TZA"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    NomDe = (id) => if id = null then null else Record.Field(Noms, Text.From(id)),
+				    CodeDe = (id) => if id = null then null else Record.Field(Codes, Text.From(id)),
+				    MatchsT = Table.Buffer(Table.FromRecords(List.Transform(Table.ToRecords(Matches0), (r) => [M = Int64.From(r[Match_ID]), D = IdDe(r[Home_Team]), E = IdDe(r[Away_Team])]))),
+				    AdvDe = (m as number, t as number) => let x = Table.SelectRows(MatchsT, (z) => z[M] = m){0} in if x[D] = t then x[E] else x[D],
+				    MinuteDe = (v, f) => let n = if v = null then 0 else Number.Round(v), fl = if f = null then "" else f,
+				        b = if fl = "Additional Time" then (if n <= 60 then 45 else 90)
+				            else if fl = "Additional In Extra Time" or fl = "Additional Extra Time" then (if n <= 112 then 105 else 120)
+				            else n,
+				        a = if b = n then 0 else n - b
+				      in [Base = b, Add = a, Texte = Text.From(b) & (if a > 0 then "+" & Text.From(a) else "") & "'", Tri = b * 10 + a],
+				    TrancheDe = (b as number) => if b <= 15 then {"0-15'", 1} else if b <= 30 then {"16-30'", 2} else if b <= 45 then {"31-45'", 3}
+				        else if b <= 60 then {"46-60'", 4} else if b <= 75 then {"61-75'", 5} else if b <= 90 then {"76-90'", 6} else {"91-120'", 7},
+				    VarFr = (x) => if x = null then null else Record.FieldOrDefault(Record.FromList({"Carton donné", "But accordé", "But refusé", "Penalty refusé", "Penalty accordé"}, {"Card given", "Goal awarded", "No goal", "No penalty", "Penalty"}), Text.Trim(x), Text.Trim(x)),
+				    V0 = Source{[Schema = "dbo", Item = "Vars"]}[Data],
+				    Lignes = List.Transform(Table.ToRecords(V0), (r) => let mn = MinuteDe(r[Minute_Var], r[Minute_Format]) in
+				        [Var_ID = Int64.From(r[Var_ID]), Match_ID = Int64.From(r[Match_ID]), Team_ID = Int64.From(r[Team_ID]),
+				         Decision = VarFr(r[Type_Intervention]), Minute = mn[Base], MinuteTexte = mn[Texte]]),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Var_ID", Int64.Type}, {"Match_ID", Int64.Type}, {"Team_ID", Int64.Type}, {"Decision", type text}, {"Minute", Int64.Type}, {"MinuteTexte", type text}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

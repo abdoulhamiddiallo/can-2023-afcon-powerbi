@@ -1,0 +1,51 @@
+relationship 885b4f91-82c0-5dbf-90e9-5f74523b95fd
+	fromColumn: F_EquipeMatch.Match_ID
+	toColumn: D_Match.'N° match'
+
+relationship 8a523837-f52b-51c0-8c39-0241a6263e64
+	fromColumn: F_EquipeMatch.Team_ID
+	toColumn: D_Equipe.Team_ID
+
+relationship fb5b6b4a-0fe9-5ac7-89e9-b11ec4ac1d70
+	fromColumn: F_Stat.Match_ID
+	toColumn: D_Match.'N° match'
+
+relationship 7828a145-1ef5-59d4-9932-f210c834549a
+	fromColumn: F_Stat.Team_ID
+	toColumn: D_Equipe.Team_ID
+
+relationship 85ef5e2c-32ea-5cef-b316-e039395a65b2
+	fromColumn: F_But.Match_ID
+	toColumn: D_Match.'N° match'
+
+relationship 7afba4f0-3834-5a1d-8b27-591b4dc8dea3
+	fromColumn: F_But.Team_ID
+	toColumn: D_Equipe.Team_ID
+
+relationship 7ede7a5b-e381-53f7-8745-378e299b8fb9
+	fromColumn: F_Carton.Match_ID
+	toColumn: D_Match.'N° match'
+
+relationship 3dd76f60-7d96-59a7-9b26-94f5fe2e8b22
+	fromColumn: F_Carton.Team_ID
+	toColumn: D_Equipe.Team_ID
+
+relationship f4c6a8b7-c8df-53e6-a94e-6f5cd7a44c50
+	fromColumn: F_Remplacement.Match_ID
+	toColumn: D_Match.'N° match'
+
+relationship aed005ac-4713-50f7-bf4b-edcb6aee9437
+	fromColumn: F_Remplacement.Team_ID
+	toColumn: D_Equipe.Team_ID
+
+relationship 73d5c8af-aaa9-5bc5-a6fe-cf63f1fb2c1f
+	fromColumn: F_VAR.Match_ID
+	toColumn: D_Match.'N° match'
+
+relationship 0ff855d0-c12e-5990-8a5d-bc904771b953
+	fromColumn: F_VAR.Team_ID
+	toColumn: D_Equipe.Team_ID
+
+relationship d9fb40e7-b40c-5ffe-a000-ad2b4bd86aba
+	fromColumn: D_Match.StadeCode
+	toColumn: D_Stade.StadeCode

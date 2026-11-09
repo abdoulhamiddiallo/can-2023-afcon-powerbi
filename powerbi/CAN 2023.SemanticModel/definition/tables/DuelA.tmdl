@@ -1,0 +1,33 @@
+table DuelA
+	lineageTag: 067e716e-355e-52d1-807f-c71675500768
+
+	column 'Nation A'
+		dataType: string
+		lineageTag: 24623bfd-bee6-5388-a3b9-7f7107e256cc
+		summarizeBy: none
+		sourceColumn: [Nation A]
+		sortByColumn: 'Ordre DuelA'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Id DuelA'
+		dataType: int64
+		lineageTag: 816ecc6e-c7e7-55ad-9687-2b7f0851e533
+		summarizeBy: none
+		sourceColumn: [Id DuelA]
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre DuelA'
+		dataType: int64
+		lineageTag: 0965c606-e5ea-5c4d-9485-9e865ba6ccb9
+		summarizeBy: none
+		sourceColumn: [Ordre DuelA]
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DuelA = calculated
+		mode: import
+		source = SELECTCOLUMNS ( D_Equipe, "Nation A", D_Equipe[Équipe], "Id DuelA", D_Equipe[Team_ID], "Ordre DuelA", D_Equipe[Ordre du parcours] )

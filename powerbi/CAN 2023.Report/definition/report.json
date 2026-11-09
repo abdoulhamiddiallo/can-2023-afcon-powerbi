@@ -1,0 +1,253 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "Fluent2-CY26SU08",
+      "reportVersionAtImport": {
+        "visual": "2.12.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "ThemeEburnie",
+      "reportVersionAtImport": {
+        "visual": "2.12.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "Fluent2-CY26SU08",
+          "path": "BaseThemes/Fluent2-CY26SU08.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "acc_ligne.png",
+          "path": "acc_ligne.png",
+          "type": "Image"
+        },
+        {
+          "name": "acc_or.png",
+          "path": "acc_or.png",
+          "type": "Image"
+        },
+        {
+          "name": "acc_orange.png",
+          "path": "acc_orange.png",
+          "type": "Image"
+        },
+        {
+          "name": "acc_tricolore.png",
+          "path": "acc_tricolore.png",
+          "type": "Image"
+        },
+        {
+          "name": "acc_vert.png",
+          "path": "acc_vert.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg.png",
+          "path": "bg.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_buteurs_off.png",
+          "path": "ic_buteurs_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_buteurs_on.png",
+          "path": "ic_buteurs_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_discipline_off.png",
+          "path": "ic_discipline_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_discipline_on.png",
+          "path": "ic_discipline_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_duel_off.png",
+          "path": "ic_duel_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_duel_on.png",
+          "path": "ic_duel_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_fil_off.png",
+          "path": "ic_fil_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_fil_on.png",
+          "path": "ic_fil_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_groupes_off.png",
+          "path": "ic_groupes_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_groupes_on.png",
+          "path": "ic_groupes_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_match_off.png",
+          "path": "ic_match_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_match_on.png",
+          "path": "ic_match_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_nations_off.png",
+          "path": "ic_nations_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_nations_on.png",
+          "path": "ic_nations_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_parcours_off.png",
+          "path": "ic_parcours_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_parcours_on.png",
+          "path": "ic_parcours_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_stades_off.png",
+          "path": "ic_stades_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_stades_on.png",
+          "path": "ic_stades_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_tableau_off.png",
+          "path": "ic_tableau_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_tableau_on.png",
+          "path": "ic_tableau_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_trophee_off.png",
+          "path": "ic_trophee_off.png",
+          "type": "Image"
+        },
+        {
+          "name": "ic_trophee_on.png",
+          "path": "ic_trophee_on.png",
+          "type": "Image"
+        },
+        {
+          "name": "logo_caf.png",
+          "path": "logo_caf.png",
+          "type": "Image"
+        },
+        {
+          "name": "logo_can.png",
+          "path": "logo_can.png",
+          "type": "Image"
+        },
+        {
+          "name": "logo_fifa.png",
+          "path": "logo_fifa.png",
+          "type": "Image"
+        },
+        {
+          "name": "logo_rail.png",
+          "path": "logo_rail.png",
+          "type": "Image"
+        },
+        {
+          "name": "mascotte.png",
+          "path": "mascotte.png",
+          "type": "Image"
+        },
+        {
+          "name": "stade.png",
+          "path": "stade.png",
+          "type": "Image"
+        },
+        {
+          "name": "ThemeEburnie",
+          "path": "ThemeEburnie",
+          "type": "CustomTheme"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

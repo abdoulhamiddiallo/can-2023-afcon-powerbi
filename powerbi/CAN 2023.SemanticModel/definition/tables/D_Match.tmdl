@@ -1,0 +1,351 @@
+table D_Match
+	lineageTag: c746df91-eab6-5d66-aa83-abf1589b0882
+
+	column 'N° match'
+		dataType: int64
+		formatString: 0
+		lineageTag: 72bbd190-45cb-5cfc-86e3-da21b56928c1
+		summarizeBy: none
+		sourceColumn: Match_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: d mmmm yyyy
+		lineageTag: 372298a0-6d73-5b0c-83f4-ed1cd96c141a
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date (texte)'
+		dataType: string
+		lineageTag: c97c3e0f-f2da-5f98-bd1b-47f33a77a46d
+		summarizeBy: none
+		sourceColumn: DateTexte
+		sortByColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Jour
+		dataType: string
+		lineageTag: 694f46a7-a98b-5f9e-9cb5-228fe67a97b7
+		summarizeBy: none
+		sourceColumn: Jour
+		sortByColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tour
+		dataType: string
+		lineageTag: a3aa188f-32f7-5325-8ad4-cabc205cde5d
+		summarizeBy: none
+		sourceColumn: Tour
+		sortByColumn: 'Ordre du tour'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tour (court)'
+		dataType: string
+		lineageTag: f01b321f-6030-5499-bed9-65bb39f00a4e
+		summarizeBy: none
+		sourceColumn: TourCourt
+		sortByColumn: 'Ordre du tour'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre du tour'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: c85db297-5971-5ce3-8bff-0c5972292abd
+		summarizeBy: none
+		sourceColumn: TourOrdre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Phase
+		dataType: string
+		lineageTag: 6b95463d-5d0d-5804-a85f-627076b0ae3c
+		summarizeBy: none
+		sourceColumn: Phase
+
+		annotation SummarizationSetBy = Automatic
+
+	column Groupe
+		dataType: string
+		lineageTag: 931e65fc-84cf-5c47-9fcd-8595e160c167
+		summarizeBy: none
+		sourceColumn: Groupe
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Étiquette'
+		dataType: string
+		lineageTag: eacb64a3-63c6-5757-90da-aa202b934c83
+		summarizeBy: none
+		sourceColumn: Etiquette
+
+		annotation SummarizationSetBy = Automatic
+
+	column DomID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 09841c9c-5879-5d3c-828d-4a822ab12d53
+		summarizeBy: none
+		sourceColumn: DomID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExtID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 835d98e8-4501-5253-a49a-640d06d93fb2
+		summarizeBy: none
+		sourceColumn: ExtID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domicile
+		dataType: string
+		lineageTag: 65da57e4-fb60-525d-ac74-6fac0a9d2798
+		summarizeBy: none
+		sourceColumn: Domicile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Extérieur'
+		dataType: string
+		lineageTag: 7a3d5078-6de0-5637-a1ee-a8ca197c9fa6
+		summarizeBy: none
+		sourceColumn: Exterieur
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Buts domicile'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a4890f0-9048-581d-a136-ee8401f6aaae
+		summarizeBy: none
+		sourceColumn: ButsDom
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Buts extérieur'
+		dataType: int64
+		formatString: 0
+		lineageTag: e0f19a55-6230-5196-a034-72d36fd054eb
+		summarizeBy: none
+		sourceColumn: ButsExt
+
+		annotation SummarizationSetBy = Automatic
+
+	column Score
+		dataType: string
+		lineageTag: 19df74ea-0fbd-586d-ba6a-0c4e1131ef56
+		summarizeBy: none
+		sourceColumn: Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Score (détail)'
+		dataType: string
+		lineageTag: 75ebfb37-ab76-5f6e-8ac8-2147882ddb58
+		summarizeBy: none
+		sourceColumn: ScoreTexte
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tirs au but'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e458c82-685d-52d7-9bf0-2d7093afd377
+		summarizeBy: none
+		sourceColumn: TAB
+
+		annotation SummarizationSetBy = Automatic
+
+	column Prolongation
+		dataType: int64
+		formatString: 0
+		lineageTag: 257df6ff-c58d-55b8-862d-4968ed893f2e
+		summarizeBy: none
+		sourceColumn: Prolongation
+
+		annotation SummarizationSetBy = Automatic
+
+	column VainqueurID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: d01a75ae-a488-5168-a813-2c29ac62be2f
+		summarizeBy: none
+		sourceColumn: VainqueurID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vainqueur
+		dataType: string
+		lineageTag: f5187ef9-74df-5ffc-acb1-29ab659bca42
+		summarizeBy: none
+		sourceColumn: Vainqueur
+
+		annotation SummarizationSetBy = Automatic
+
+	column Match
+		dataType: string
+		lineageTag: 1f245c19-d955-53b5-a1ae-c1213821db96
+		summarizeBy: none
+		sourceColumn: Libelle
+		sortByColumn: 'N° match'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Affiche
+		dataType: string
+		lineageTag: afa4d522-e59f-588e-90a4-5db57440eed6
+		summarizeBy: none
+		sourceColumn: Affiche
+		sortByColumn: 'N° match'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Affiche (courte)'
+		dataType: string
+		lineageTag: e6ea1259-90e4-53ab-a4dd-8c70010b7ab8
+		summarizeBy: none
+		sourceColumn: AfficheCourte
+		sortByColumn: 'N° match'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Arbitre
+		dataType: string
+		lineageTag: 22a32a26-c986-55f1-8c5c-c4968a62406a
+		summarizeBy: none
+		sourceColumn: Arbitre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pays de l''arbitre'
+		dataType: string
+		lineageTag: 39e4be23-3cad-5bfb-9b61-817af46e85c3
+		summarizeBy: none
+		sourceColumn: PaysArbitre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Homme du match'
+		dataType: string
+		lineageTag: 81ab727f-cd76-5a9c-bfc7-67f0b2fa7fc5
+		summarizeBy: none
+		sourceColumn: HommeDuMatch
+
+		annotation SummarizationSetBy = Automatic
+
+	column StadeCode
+		dataType: string
+		isHidden
+		lineageTag: e0ad5abd-e78e-58a9-b944-4b24597c2afe
+		summarizeBy: none
+		sourceColumn: StadeCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Affluence
+		dataType: int64
+		formatString: #,0
+		lineageTag: f63e9a63-b89a-5e8d-a876-75a419771657
+		summarizeBy: sum
+		sourceColumn: Affluence
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Buts du match'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a6c6c2d-79fb-525c-9991-d9a1de629cd3
+		summarizeBy: none
+		sourceColumn: TotalButs
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Écart'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6cbc821e-d418-5ead-aa34-1545f02abab3
+		summarizeBy: none
+		sourceColumn: Ecart
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Match = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    Matches0 = Source{[Schema = "dbo", Item = "Matches"]}[Data],
+				    Teams0 = Source{[Schema = "dbo", Item = "Teams"]}[Data],
+				    Cles = Record.FromList(List.Transform(Teams0[Team_ID], each Int64.From(_)), List.Transform(Teams0[Team_Name], each Text.Lower(Text.Trim(_)))),
+				    IdDe = (nom as text) as number => Record.Field(Cles, Text.Lower(Text.Trim(nom))),
+				    Noms = Record.FromList({"Guinée équatoriale", "Nigeria", "Côte d'Ivoire", "Guinée-Bissau", "Cap-Vert", "Égypte", "Ghana", "Mozambique", "Sénégal", "Cameroun", "Guinée", "Gambie", "Angola", "Burkina Faso", "Mauritanie", "Algérie", "Mali", "Afrique du Sud", "Namibie", "Tunisie", "Maroc", "RD Congo", "Zambie", "Tanzanie"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Codes = Record.FromList({"GNQ", "NGA", "CIV", "GNB", "CPV", "EGY", "GHA", "MOZ", "SEN", "CMR", "GIN", "GMB", "AGO", "BFA", "MRT", "DZA", "MLI", "ZAF", "NAM", "TUN", "MAR", "COD", "ZMB", "TZA"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    NomDe = (id) => if id = null then null else Record.Field(Noms, Text.From(id)),
+				    CodeDe = (id) => if id = null then null else Record.Field(Codes, Text.From(id)),
+				    MatchsT = Table.Buffer(Table.FromRecords(List.Transform(Table.ToRecords(Matches0), (r) => [M = Int64.From(r[Match_ID]), D = IdDe(r[Home_Team]), E = IdDe(r[Away_Team])]))),
+				    AdvDe = (m as number, t as number) => let x = Table.SelectRows(MatchsT, (z) => z[M] = m){0} in if x[D] = t then x[E] else x[D],
+				    MinuteDe = (v, f) => let n = if v = null then 0 else Number.Round(v), fl = if f = null then "" else f,
+				        b = if fl = "Additional Time" then (if n <= 60 then 45 else 90)
+				            else if fl = "Additional In Extra Time" or fl = "Additional Extra Time" then (if n <= 112 then 105 else 120)
+				            else n,
+				        a = if b = n then 0 else n - b
+				      in [Base = b, Add = a, Texte = Text.From(b) & (if a > 0 then "+" & Text.From(a) else "") & "'", Tri = b * 10 + a],
+				    TrancheDe = (b as number) => if b <= 15 then {"0-15'", 1} else if b <= 30 then {"16-30'", 2} else if b <= 45 then {"31-45'", 3}
+				        else if b <= 60 then {"46-60'", 4} else if b <= 75 then {"61-75'", 5} else if b <= 90 then {"76-90'", 6} else {"91-120'", 7},
+				    Goals0 = Source{[Schema = "dbo", Item = "Goals"]}[Data],
+				    ButsFix = Table.Buffer(Table.FromRecords(List.Transform(Table.ToRecords(Goals0), (r) => Record.Combine({r,
+				        [MatchFix = let m = Int64.From(r[Match_ID]) in if m >= 27 and m <= 33 then m - 1 else m, TeamFix = Int64.From(r[Team_ID])]})))),
+				    ButsDe = (m as number, t as number) as number => Table.RowCount(Table.SelectRows(ButsFix, (g) => g[MatchFix] = m and g[TeamFix] = t)),
+				    TourLib = Record.FromList({"Phase de groupes", "Huitièmes de finale", "Quarts de finale", "Demi-finales", "Match pour la 3e place", "Finale"}, {"Group Stage", "Round of 16", "Quarter Final", "Semi Final", "Third Place Play Off", "Final"}),
+				    TourCourt = Record.FromList({"Groupes", "8es", "Quarts", "Demies", "3e place", "Finale"}, {"Group Stage", "Round of 16", "Quarter Final", "Semi Final", "Third Place Play Off", "Final"}),
+				    TourOrdre = Record.FromList({1, 2, 3, 4, 5, 6}, {"Group Stage", "Round of 16", "Quarter Final", "Semi Final", "Third Place Play Off", "Final"}),
+				    PaysFr = (x) => if x = null then null else Record.FieldOrDefault(Record.FromList({"Égypte", "Éthiopie", "Bénin"}, {"Egypte", "Ethiopie", "Benin"}), Text.Trim(x), Text.Trim(x)),
+				    Courts = Record.FromList({"Guinée éq.", "Nigeria", "Côte d'Ivoire", "Guinée-Bissau", "Cap-Vert", "Égypte", "Ghana", "Mozambique", "Sénégal", "Cameroun", "Guinée", "Gambie", "Angola", "Burkina Faso", "Mauritanie", "Algérie", "Mali", "Afr. du Sud", "Namibie", "Tunisie", "Maroc", "RD Congo", "Zambie", "Tanzanie"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Groups0 = Source{[Schema = "dbo", Item = "Groups"]}[Data],
+				    Stad0 = Table.Buffer(Source{[Schema = "dbo", Item = "Stadiums"]}[Data]),
+				    Subs0 = Source{[Schema = "dbo", Item = "Substitutions"]}[Data],
+				    GrpDe = Record.FromList(List.Transform(Groups0[Group_ID], each Text.Start(_, 1)), List.Transform(Groups0[Team_ID], each Text.From(Int64.From(_)))),
+				    Prolong = List.Buffer(List.Distinct(List.Transform(Table.SelectRows(Subs0, each Text.Contains([Minute_Format], "Extra"))[Match_ID], each Int64.From(_)))),
+				    AffDe = (m as number) => let r = Table.SelectRows(Stad0, (x) => Int64.From(x[Match_ID]) = m) in if Table.IsEmpty(r) then null else Int64.From(r{0}[Attendance]),
+				    Lignes = List.Transform(Table.ToRecords(Matches0), (r) => let
+				        m = Int64.From(r[Match_ID]), d = IdDe(r[Home_Team]), e = IdDe(r[Away_Team]),
+				        bd = ButsDe(m, d), be = ButsDe(m, e), rd = Text.Trim(r[Round]),
+				        ko = rd <> "Group Stage", tab = ko and bd = be,
+				        v = if Text.Lower(Text.Trim(r[Result])) = "draw" then null else IdDe(r[Result]),
+				        ap = ko and List.Contains(Prolong, m),
+				        tc = if ko then Record.Field(TourCourt, rd) else "Groupe " & Record.Field(GrpDe, Text.From(d)),
+				        sc = Text.From(bd) & " – " & Text.From(be),
+				        dt = Date.AddYears(Date.From(r[Date]), 1)
+				      in [Match_ID = m, Date = dt, DateTexte = Date.ToText(dt, [Format = "d MMM yyyy", Culture = "fr-FR"]), Jour = Date.ToText(dt, [Format = "d MMM", Culture = "fr-FR"]),
+				          Tour = Record.Field(TourLib, rd), TourCourt = Record.Field(TourCourt, rd), TourOrdre = Record.Field(TourOrdre, rd),
+				          Phase = if ko then "Élimination directe" else "Phase de groupes",
+				          Groupe = if ko then null else Record.Field(GrpDe, Text.From(d)), Etiquette = tc,
+				          DomID = d, ExtID = e, Domicile = NomDe(d), Exterieur = NomDe(e), ButsDom = bd, ButsExt = be,
+				          Score = sc, ScoreTexte = sc & (if tab then "  (t.a.b.)" else if ap then "  (a.p.)" else ""),
+				          TAB = if tab then 1 else 0, Prolongation = if ap then 1 else 0,
+				          VainqueurID = v, Vainqueur = if v = null then "Match nul" else NomDe(v),
+				          Libelle = Text.PadStart(Text.From(m), 2, "0") & " · " & tc & " · " & NomDe(d) & " " & sc & " " & NomDe(e),
+				          Affiche = NomDe(d) & "  " & sc & "  " & NomDe(e),
+				          AfficheCourte = Record.Field(Courts, Text.From(d)) & "  " & sc & "  " & Record.Field(Courts, Text.From(e)),
+				          Arbitre = Text.Trim(r[Referee]), PaysArbitre = PaysFr(r[Ref_Country]), HommeDuMatch = Text.Trim(r[Moth]),
+				          StadeCode = Text.Start(Text.Trim(r[Stadium_ID]), 1), Affluence = AffDe(m), TotalButs = bd + be,
+				          Ecart = Number.Abs(bd - be)]),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Match_ID", Int64.Type}, {"Date", type date}, {"DateTexte", type text}, {"Jour", type text}, {"Tour", type text}, {"TourCourt", type text}, {"TourOrdre", Int64.Type}, {"Phase", type text}, {"Groupe", type text}, {"Etiquette", type text}, {"DomID", Int64.Type}, {"ExtID", Int64.Type}, {"Domicile", type text}, {"Exterieur", type text}, {"ButsDom", Int64.Type}, {"ButsExt", Int64.Type}, {"Score", type text}, {"ScoreTexte", type text}, {"TAB", Int64.Type}, {"Prolongation", Int64.Type}, {"VainqueurID", Int64.Type}, {"Vainqueur", type text}, {"Libelle", type text}, {"Affiche", type text}, {"AfficheCourte", type text}, {"Arbitre", type text}, {"PaysArbitre", type text}, {"HommeDuMatch", type text}, {"StadeCode", type text}, {"Affluence", Int64.Type}, {"TotalButs", Int64.Type}, {"Ecart", Int64.Type}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

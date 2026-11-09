@@ -1,0 +1,357 @@
+table F_EquipeMatch
+	lineageTag: 74988fc4-9a15-5ee5-b0f4-8979fed7d85b
+
+	column Cle
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: b1b43ffb-ebb1-51ca-9a06-d9e690d5b71b
+		summarizeBy: none
+		sourceColumn: Cle
+
+		annotation SummarizationSetBy = Automatic
+
+	column Match_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: f7d7f0b3-ff46-5a06-bfd3-560187f53171
+		summarizeBy: none
+		sourceColumn: Match_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: acc4ce3a-28dc-558a-95c2-cb8a3bfd31e1
+		summarizeBy: none
+		sourceColumn: Team_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column AdvID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 9f075ebf-d7b8-57a6-93a5-b0ac26452f2e
+		summarizeBy: none
+		sourceColumn: AdvID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adversaire
+		dataType: string
+		lineageTag: 9a409b57-f79c-5f7f-9078-25542f345480
+		summarizeBy: none
+		sourceColumn: Adversaire
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Côté'
+		dataType: string
+		lineageTag: fe45e4a4-9142-50cf-b1ec-caf054aad760
+		summarizeBy: none
+		sourceColumn: Cote
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Buts pour'
+		dataType: int64
+		formatString: 0
+		lineageTag: a1f02d71-282a-5eae-b85d-d4d8bb9297d2
+		summarizeBy: sum
+		sourceColumn: BP
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Buts contre'
+		dataType: int64
+		formatString: 0
+		lineageTag: dc9bab4c-1fc0-518a-b5f4-ef31f272b3f9
+		summarizeBy: sum
+		sourceColumn: BC
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Résultat'
+		dataType: string
+		lineageTag: acb5ddbb-9f90-56e1-80aa-ec6ce6df4d5e
+		summarizeBy: none
+		sourceColumn: Resultat
+
+		annotation SummarizationSetBy = Automatic
+
+	column Victoire
+		dataType: int64
+		formatString: 0
+		lineageTag: a606914a-4432-5ee7-8fd7-cde174bf7e50
+		summarizeBy: sum
+		sourceColumn: Victoire
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nul
+		dataType: int64
+		formatString: 0
+		lineageTag: 72d12b45-8889-5398-8ca4-c3145dbfb15b
+		summarizeBy: sum
+		sourceColumn: Nul
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Défaite'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9e9f35cb-be1f-5e70-9067-1d431c7853da
+		summarizeBy: sum
+		sourceColumn: Defaite
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nul puis t.a.b.'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0dce7366-f124-5f3a-8ebb-4318fc02a65b
+		summarizeBy: sum
+		sourceColumn: NulTAB
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Clean sheet'
+		dataType: int64
+		formatString: 0
+		lineageTag: 974e4df2-c259-54d0-9c2a-34d58f37a370
+		summarizeBy: sum
+		sourceColumn: CleanSheet
+
+		annotation SummarizationSetBy = Automatic
+
+	column Points
+		dataType: int64
+		formatString: 0
+		lineageTag: 10b1c137-38f7-5482-ab52-92bc878616f2
+		summarizeBy: sum
+		sourceColumn: Points
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Étape'
+		dataType: string
+		lineageTag: e5cda773-05cd-5400-85dd-52422c88d7a1
+		summarizeBy: none
+		sourceColumn: Etape
+		sortByColumn: 'Ordre étape'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre étape'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 143fca77-3820-5418-b7e1-a30b3047ea55
+		summarizeBy: none
+		sourceColumn: EtapeOrdre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Score équipe'
+		dataType: string
+		lineageTag: 78016f39-f129-5908-bad6-1fdd1bc779ee
+		summarizeBy: none
+		sourceColumn: ScoreEquipe
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Possession (%)'
+		dataType: double
+		formatString: 0.#
+		lineageTag: 36b3dc59-30e1-5ba0-8700-3a6efd85fa8a
+		summarizeBy: sum
+		sourceColumn: Possession
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tirs
+		dataType: double
+		formatString: 0.#
+		lineageTag: 730610a4-3b0c-5415-923b-4746aefa6466
+		summarizeBy: sum
+		sourceColumn: Shots
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tirs cadrés'
+		dataType: double
+		formatString: 0.#
+		lineageTag: 85555d46-181c-507a-885e-f259c18299e1
+		summarizeBy: sum
+		sourceColumn: Shots_Target
+
+		annotation SummarizationSetBy = Automatic
+
+	column Passes
+		dataType: double
+		formatString: 0.#
+		lineageTag: 42f8aba6-1666-5042-8ab1-a704ada84630
+		summarizeBy: sum
+		sourceColumn: Passes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Précision des passes (%)'
+		dataType: double
+		formatString: 0.#
+		lineageTag: e59593db-a3bc-58d6-81d7-17554ac2db46
+		summarizeBy: sum
+		sourceColumn: Passings_Accuracy
+
+		annotation SummarizationSetBy = Automatic
+
+	column Corners
+		dataType: double
+		formatString: 0.#
+		lineageTag: f7b5528e-ed0b-5d5c-b4aa-56c973d9fa7d
+		summarizeBy: sum
+		sourceColumn: Corners
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hors-jeu'
+		dataType: double
+		formatString: 0.#
+		lineageTag: 165e6b3d-73ef-5e7b-b369-1d86ffd0e9d9
+		summarizeBy: sum
+		sourceColumn: Offsides
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fautes
+		dataType: double
+		formatString: 0.#
+		lineageTag: fe5ca869-b8f8-50f6-9287-bd4ed5e0e681
+		summarizeBy: sum
+		sourceColumn: Fouls
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cartons jaunes'
+		dataType: double
+		formatString: 0.#
+		lineageTag: 9247c5fd-9ad1-5fbb-9544-76762237c8c9
+		summarizeBy: sum
+		sourceColumn: Yellow_Cards
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cartons rouges'
+		dataType: double
+		formatString: 0.#
+		lineageTag: bcaabb9a-799b-541c-bbd1-91b74343997f
+		summarizeBy: sum
+		sourceColumn: Red_Cards
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tacles gagnés'
+		dataType: double
+		formatString: 0.#
+		lineageTag: 64da927c-594e-5297-9f69-27e287b64a20
+		summarizeBy: sum
+		sourceColumn: Tackles_Won
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Arrêts du gardien'
+		dataType: double
+		formatString: 0.#
+		lineageTag: e970a6a9-d30d-57c3-9f41-04afd5fd86bf
+		summarizeBy: sum
+		sourceColumn: Goalkeeper_Saves
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dégagements'
+		dataType: double
+		formatString: 0.#
+		lineageTag: 421ef034-99ac-54a5-b2c1-90fb630293b3
+		summarizeBy: sum
+		sourceColumn: Clearances
+
+		annotation SummarizationSetBy = Automatic
+
+	column Interceptions
+		dataType: double
+		formatString: 0.#
+		lineageTag: 83cea190-9760-5d82-9d72-ddb31006cc2f
+		summarizeBy: sum
+		sourceColumn: Interceptions
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contre-attaques'
+		dataType: double
+		formatString: 0.#
+		lineageTag: c733e9f9-d9f0-5b4b-8c41-54912064c6ed
+		summarizeBy: sum
+		sourceColumn: Counter_Attacks
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_EquipeMatch = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    Matches0 = Source{[Schema = "dbo", Item = "Matches"]}[Data],
+				    Teams0 = Source{[Schema = "dbo", Item = "Teams"]}[Data],
+				    Cles = Record.FromList(List.Transform(Teams0[Team_ID], each Int64.From(_)), List.Transform(Teams0[Team_Name], each Text.Lower(Text.Trim(_)))),
+				    IdDe = (nom as text) as number => Record.Field(Cles, Text.Lower(Text.Trim(nom))),
+				    Noms = Record.FromList({"Guinée équatoriale", "Nigeria", "Côte d'Ivoire", "Guinée-Bissau", "Cap-Vert", "Égypte", "Ghana", "Mozambique", "Sénégal", "Cameroun", "Guinée", "Gambie", "Angola", "Burkina Faso", "Mauritanie", "Algérie", "Mali", "Afrique du Sud", "Namibie", "Tunisie", "Maroc", "RD Congo", "Zambie", "Tanzanie"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Codes = Record.FromList({"GNQ", "NGA", "CIV", "GNB", "CPV", "EGY", "GHA", "MOZ", "SEN", "CMR", "GIN", "GMB", "AGO", "BFA", "MRT", "DZA", "MLI", "ZAF", "NAM", "TUN", "MAR", "COD", "ZMB", "TZA"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    NomDe = (id) => if id = null then null else Record.Field(Noms, Text.From(id)),
+				    CodeDe = (id) => if id = null then null else Record.Field(Codes, Text.From(id)),
+				    MatchsT = Table.Buffer(Table.FromRecords(List.Transform(Table.ToRecords(Matches0), (r) => [M = Int64.From(r[Match_ID]), D = IdDe(r[Home_Team]), E = IdDe(r[Away_Team])]))),
+				    AdvDe = (m as number, t as number) => let x = Table.SelectRows(MatchsT, (z) => z[M] = m){0} in if x[D] = t then x[E] else x[D],
+				    MinuteDe = (v, f) => let n = if v = null then 0 else Number.Round(v), fl = if f = null then "" else f,
+				        b = if fl = "Additional Time" then (if n <= 60 then 45 else 90)
+				            else if fl = "Additional In Extra Time" or fl = "Additional Extra Time" then (if n <= 112 then 105 else 120)
+				            else n,
+				        a = if b = n then 0 else n - b
+				      in [Base = b, Add = a, Texte = Text.From(b) & (if a > 0 then "+" & Text.From(a) else "") & "'", Tri = b * 10 + a],
+				    TrancheDe = (b as number) => if b <= 15 then {"0-15'", 1} else if b <= 30 then {"16-30'", 2} else if b <= 45 then {"31-45'", 3}
+				        else if b <= 60 then {"46-60'", 4} else if b <= 75 then {"61-75'", 5} else if b <= 90 then {"76-90'", 6} else {"91-120'", 7},
+				    Goals0 = Source{[Schema = "dbo", Item = "Goals"]}[Data],
+				    ButsFix = Table.Buffer(Table.FromRecords(List.Transform(Table.ToRecords(Goals0), (r) => Record.Combine({r,
+				        [MatchFix = let m = Int64.From(r[Match_ID]) in if m >= 27 and m <= 33 then m - 1 else m, TeamFix = Int64.From(r[Team_ID])]})))),
+				    ButsDe = (m as number, t as number) as number => Table.RowCount(Table.SelectRows(ButsFix, (g) => g[MatchFix] = m and g[TeamFix] = t)),
+				    TourLib = Record.FromList({"Phase de groupes", "Huitièmes de finale", "Quarts de finale", "Demi-finales", "Match pour la 3e place", "Finale"}, {"Group Stage", "Round of 16", "Quarter Final", "Semi Final", "Third Place Play Off", "Final"}),
+				    TourCourt = Record.FromList({"Groupes", "8es", "Quarts", "Demies", "3e place", "Finale"}, {"Group Stage", "Round of 16", "Quarter Final", "Semi Final", "Third Place Play Off", "Final"}),
+				    TourOrdre = Record.FromList({1, 2, 3, 4, 5, 6}, {"Group Stage", "Round of 16", "Quarter Final", "Semi Final", "Third Place Play Off", "Final"}),
+				    SK0 = Table.Buffer(Source{[Schema = "dbo", Item = "StatisticsKeys"]}[Data]),
+				    DF0 = Table.Buffer(Source{[Schema = "dbo", Item = "Defenses"]}[Data]),
+				    LigneDe = (t as table, m as number) => let x = Table.SelectRows(t, (z) => Int64.From(z[Match_ID]) = m) in if Table.IsEmpty(x) then null else x{0},
+				    Num = (rec, f as text) => if rec = null then null else let v = Record.Field(rec, f) in if v = null then null else Number.Round(v, 1),
+				    Res = (bp, bc, ko, gagnant) => if bp > bc then "Victoire" else if bp < bc then "Défaite" else if ko then (if gagnant then "Victoire aux t.a.b." else "Défaite aux t.a.b.") else "Nul",
+				    Etape = (m as number, rd as text) => if rd = "Group Stage" then "J" & Text.From(Number.RoundUp(m / 12)) else if rd = "Round of 16" then "8es" else Record.Field(TourCourt, rd),
+				    EtapeOrdre = (m as number, rd as text) => if rd = "Group Stage" then Number.RoundUp(m / 12) else Record.Field(TourOrdre, rd) + 2,
+				    Lignes = List.Combine(List.Transform(Table.ToRecords(Matches0), (r) => let
+				        m = Int64.From(r[Match_ID]), d = IdDe(r[Home_Team]), e = IdDe(r[Away_Team]),
+				        bd = ButsDe(m, d), be = ButsDe(m, e), rd = Text.Trim(r[Round]), ko = rd <> "Group Stage",
+				        v = if Text.Lower(Text.Trim(r[Result])) = "draw" then null else IdDe(r[Result]),
+				        sk = LigneDe(SK0, m), df = LigneDe(DF0, m),
+				        base = (t, a, bp, bc, cote) => [Cle = m * 100 + t, Match_ID = m, Team_ID = t, AdvID = a, Adversaire = NomDe(a), Cote = cote,
+				            BP = bp, BC = bc, Resultat = Res(bp, bc, ko, v = t), Victoire = if (bp > bc) or (ko and bp = bc and v = t) then 1 else 0,
+				            Nul = if bp = bc and not ko then 1 else 0, Defaite = if (bp < bc) or (ko and bp = bc and v <> t) then 1 else 0,
+				            NulTAB = if ko and bp = bc then 1 else 0, CleanSheet = if bc = 0 then 1 else 0,
+				            Points = if ko then null else (if bp > bc then 3 else if bp = bc then 1 else 0),
+				            Etape = Etape(m, rd), EtapeOrdre = EtapeOrdre(m, rd), ScoreEquipe = Text.From(bp) & " – " & Text.From(bc)]
+				      in {Record.Combine({base(d, e, bd, be, "Domicile"), [Possession = Num(sk, "Possession1"), Shots = Num(sk, "Shots1"), Shots_Target = Num(sk, "Shots_Target1"), Passes = Num(sk, "Passes1"), Passings_Accuracy = Num(sk, "Passings_Accuracy1"), Corners = Num(sk, "Corners1"), Offsides = Num(sk, "Offsides1"), Fouls = Num(sk, "Fouls1"), Yellow_Cards = Num(sk, "Yellow_Cards1"), Red_Cards = Num(sk, "Red_Cards1"), Tackles_Won = Num(df, "Tackles_Won1"), Goalkeeper_Saves = Num(df, "Goalkeeper_Saves1"), Clearances = Num(df, "Clearances1"), Interceptions = Num(df, "Interceptions1"), Counter_Attacks = Num(df, "Counter_Attacks1")]}),
+				          Record.Combine({base(e, d, be, bd, "Extérieur"), [Possession = Num(sk, "Possession2"), Shots = Num(sk, "Shots2"), Shots_Target = Num(sk, "Shots_Target2"), Passes = Num(sk, "Passes2"), Passings_Accuracy = Num(sk, "Passings_Accuracy2"), Corners = Num(sk, "Corners2"), Offsides = Num(sk, "Offsides2"), Fouls = Num(sk, "Fouls2"), Yellow_Cards = Num(sk, "Yellow_Cards2"), Red_Cards = Num(sk, "Red_Cards2"), Tackles_Won = Num(df, "Tackles_Won2"), Goalkeeper_Saves = Num(df, "Goalkeeper_Saves2"), Clearances = Num(df, "Clearances2"), Interceptions = Num(df, "Interceptions2"), Counter_Attacks = Num(df, "Counter_Attacks2")]})})),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Cle", Int64.Type}, {"Match_ID", Int64.Type}, {"Team_ID", Int64.Type}, {"AdvID", Int64.Type}, {"Adversaire", type text}, {"Cote", type text}, {"BP", Int64.Type}, {"BC", Int64.Type}, {"Resultat", type text}, {"Victoire", Int64.Type}, {"Nul", Int64.Type}, {"Defaite", Int64.Type}, {"NulTAB", Int64.Type}, {"CleanSheet", Int64.Type}, {"Points", Int64.Type}, {"Etape", type text}, {"EtapeOrdre", Int64.Type}, {"ScoreEquipe", type text}, {"Possession", type number}, {"Shots", type number}, {"Shots_Target", type number}, {"Passes", type number}, {"Passings_Accuracy", type number}, {"Corners", type number}, {"Offsides", type number}, {"Fouls", type number}, {"Yellow_Cards", type number}, {"Red_Cards", type number}, {"Tackles_Won", type number}, {"Goalkeeper_Saves", type number}, {"Clearances", type number}, {"Interceptions", type number}, {"Counter_Attacks", type number}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

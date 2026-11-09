@@ -1,0 +1,12 @@
+/// Instance SQL Server qui héberge la base de la CAN 2023.
+expression Serveur = "localhost" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d63d99a4-324e-5b5e-974d-f7a806b9187e
+
+	annotation PBI_ResultType = Text
+
+/// Nom de la base de données SQL Server.
+expression Base = "AFCON2023" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 9c441d4e-99eb-5bfb-9500-2758532f96b6
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,215 @@
+{
+  "name": "Eburnie",
+  "dataColors": [
+    "#F28C1E",
+    "#2FBF71",
+    "#E8B84A",
+    "#4AB3F0",
+    "#E8475A",
+    "#A78BFA",
+    "#F6F1E6",
+    "#7FD1AE",
+    "#F5C842",
+    "#5B8DEF"
+  ],
+  "background": "#063629",
+  "backgroundLight": "#0B3A2D",
+  "backgroundNeutral": "#0D4434",
+  "foreground": "#F6F1E6",
+  "foregroundNeutralSecondary": "#C2D6CC",
+  "foregroundNeutralTertiary": "#8FB3A3",
+  "tableAccent": "#F28C1E",
+  "good": "#2FBF71",
+  "neutral": "#E8B84A",
+  "bad": "#E5484D",
+  "maximum": "#F28C1E",
+  "center": "#E8B84A",
+  "minimum": "#0D4434",
+  "null": "#0B3A2D",
+  "hyperlink": "#4AB3F0",
+  "visitedHyperlink": "#A78BFA",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 15,
+      "color": "#F6F1E6"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#F6F1E6"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#C2D6CC"
+    },
+    "callout": {
+      "fontFace": "DIN",
+      "fontSize": 32,
+      "color": "#F6F1E6"
+    },
+    "largeTitle": {
+      "fontFace": "DIN",
+      "fontSize": 30,
+      "color": "#F6F1E6"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#0B3A2D"
+              }
+            },
+            "transparency": 10
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#245E4A"
+              }
+            },
+            "radius": 14
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "outspacePane": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#063629"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#F6F1E6"
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": "#245E4A"
+              }
+            }
+          }
+        ],
+        "filterCard": [
+          {
+            "$id": "Applied",
+            "backgroundColor": {
+              "solid": {
+                "color": "#0B3A2D"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#F6F1E6"
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": "#245E4A"
+              }
+            }
+          },
+          {
+            "$id": "Available",
+            "backgroundColor": {
+              "solid": {
+                "color": "#063629"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#C2D6CC"
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": "#245E4A"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#063629"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#021A14"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "items": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#F6F1E6"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#082E24"
+              }
+            },
+            "outline": "None",
+            "fontSize": 13
+          }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "columnHeaders": [
+          {
+            "backColor": {
+              "solid": {
+                "color": "#F28C1E"
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

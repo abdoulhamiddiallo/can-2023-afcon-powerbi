@@ -1,0 +1,109 @@
+table F_Stat
+	lineageTag: 5391386e-3ba5-55a6-9c36-c8873b63011b
+
+	column Match_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 1d57a2ef-09a7-5964-835a-b08049f311c5
+		summarizeBy: none
+		sourceColumn: Match_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team_ID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 848398f8-716a-524b-a2b2-b262ca4d436b
+		summarizeBy: none
+		sourceColumn: Team_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Côté'
+		dataType: string
+		lineageTag: 94bac141-398f-58e8-8ff3-f6727898bd63
+		summarizeBy: none
+		sourceColumn: Cote
+
+		annotation SummarizationSetBy = Automatic
+
+	column Statistique
+		dataType: string
+		lineageTag: f8d1a811-1fe3-5221-8172-143c2b33184e
+		summarizeBy: none
+		sourceColumn: Statistique
+		sortByColumn: Ordre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordre
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 10bdbb29-827f-591f-99fc-023fe970eda8
+		summarizeBy: none
+		sourceColumn: Ordre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valeur
+		dataType: double
+		formatString: 0.#
+		lineageTag: 8ea431cb-0c6b-5188-afc2-0cc57943ec61
+		summarizeBy: sum
+		sourceColumn: Valeur
+
+		annotation SummarizationSetBy = Automatic
+
+	column Part
+		dataType: double
+		formatString: 0%
+		isHidden
+		lineageTag: e00c1fed-02c9-575d-a721-aca351dcbe5a
+		summarizeBy: none
+		sourceColumn: Part
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Stat = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    Matches0 = Source{[Schema = "dbo", Item = "Matches"]}[Data],
+				    Teams0 = Source{[Schema = "dbo", Item = "Teams"]}[Data],
+				    Cles = Record.FromList(List.Transform(Teams0[Team_ID], each Int64.From(_)), List.Transform(Teams0[Team_Name], each Text.Lower(Text.Trim(_)))),
+				    IdDe = (nom as text) as number => Record.Field(Cles, Text.Lower(Text.Trim(nom))),
+				    Noms = Record.FromList({"Guinée équatoriale", "Nigeria", "Côte d'Ivoire", "Guinée-Bissau", "Cap-Vert", "Égypte", "Ghana", "Mozambique", "Sénégal", "Cameroun", "Guinée", "Gambie", "Angola", "Burkina Faso", "Mauritanie", "Algérie", "Mali", "Afrique du Sud", "Namibie", "Tunisie", "Maroc", "RD Congo", "Zambie", "Tanzanie"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    Codes = Record.FromList({"GNQ", "NGA", "CIV", "GNB", "CPV", "EGY", "GHA", "MOZ", "SEN", "CMR", "GIN", "GMB", "AGO", "BFA", "MRT", "DZA", "MLI", "ZAF", "NAM", "TUN", "MAR", "COD", "ZMB", "TZA"}, {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}),
+				    NomDe = (id) => if id = null then null else Record.Field(Noms, Text.From(id)),
+				    CodeDe = (id) => if id = null then null else Record.Field(Codes, Text.From(id)),
+				    MatchsT = Table.Buffer(Table.FromRecords(List.Transform(Table.ToRecords(Matches0), (r) => [M = Int64.From(r[Match_ID]), D = IdDe(r[Home_Team]), E = IdDe(r[Away_Team])]))),
+				    AdvDe = (m as number, t as number) => let x = Table.SelectRows(MatchsT, (z) => z[M] = m){0} in if x[D] = t then x[E] else x[D],
+				    MinuteDe = (v, f) => let n = if v = null then 0 else Number.Round(v), fl = if f = null then "" else f,
+				        b = if fl = "Additional Time" then (if n <= 60 then 45 else 90)
+				            else if fl = "Additional In Extra Time" or fl = "Additional Extra Time" then (if n <= 112 then 105 else 120)
+				            else n,
+				        a = if b = n then 0 else n - b
+				      in [Base = b, Add = a, Texte = Text.From(b) & (if a > 0 then "+" & Text.From(a) else "") & "'", Tri = b * 10 + a],
+				    TrancheDe = (b as number) => if b <= 15 then {"0-15'", 1} else if b <= 30 then {"16-30'", 2} else if b <= 45 then {"31-45'", 3}
+				        else if b <= 60 then {"46-60'", 4} else if b <= 75 then {"61-75'", 5} else if b <= 90 then {"76-90'", 6} else {"91-120'", 7},
+				    SK0 = Table.Buffer(Source{[Schema = "dbo", Item = "StatisticsKeys"]}[Data]),
+				    DF0 = Table.Buffer(Source{[Schema = "dbo", Item = "Defenses"]}[Data]),
+				    LigneDe = (t as table, m as number) => let x = Table.SelectRows(t, (z) => Int64.From(z[Match_ID]) = m) in if Table.IsEmpty(x) then null else x{0},
+				    Defs = {{"Possession", "Possession (%)", 1, "sk"}, {"Shots", "Tirs", 2, "sk"}, {"Shots_Target", "Tirs cadrés", 3, "sk"}, {"Passes", "Passes", 4, "sk"}, {"Passings_Accuracy", "Précision des passes (%)", 5, "sk"}, {"Corners", "Corners", 6, "sk"}, {"Offsides", "Hors-jeu", 7, "sk"}, {"Fouls", "Fautes", 8, "sk"}, {"Yellow_Cards", "Cartons jaunes", 9, "sk"}, {"Red_Cards", "Cartons rouges", 10, "sk"}, {"Tackles_Won", "Tacles gagnés", 11, "df"}, {"Goalkeeper_Saves", "Arrêts du gardien", 12, "df"}, {"Clearances", "Dégagements", 13, "df"}, {"Interceptions", "Interceptions", 14, "df"}, {"Counter_Attacks", "Contre-attaques", 15, "df"}},
+				    Lignes = List.Combine(List.Transform(Table.ToRecords(Matches0), (r) => let
+				        m = Int64.From(r[Match_ID]), d = IdDe(r[Home_Team]), e = IdDe(r[Away_Team]),
+				        sk = LigneDe(SK0, m), df = LigneDe(DF0, m)
+				      in List.Combine(List.Transform(Defs, (s) => let src = if s{3} = "sk" then sk else df,
+				            v1 = if src = null then null else Record.Field(src, s{0} & "1"), v2 = if src = null then null else Record.Field(src, s{0} & "2")
+				          in {[Match_ID = m, Team_ID = d, Cote = "Domicile", Statistique = s{1}, Ordre = s{2}, Valeur = v1, Part = if v1 = null or (v1 + v2) = 0 then null else v1 / (v1 + v2)],
+				              [Match_ID = m, Team_ID = e, Cote = "Extérieur", Statistique = s{1}, Ordre = s{2}, Valeur = v2, Part = if v2 = null or (v1 + v2) = 0 then null else v2 / (v1 + v2)]})))),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Match_ID", Int64.Type}, {"Team_ID", Int64.Type}, {"Cote", type text}, {"Statistique", type text}, {"Ordre", Int64.Type}, {"Valeur", type number}, {"Part", type number}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

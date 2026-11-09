@@ -1,0 +1,25 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: fr-FR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["D_Equipe", "D_Match", "D_Stade", "F_EquipeMatch", "F_Stat", "F_But", "F_Carton", "F_Remplacement", "F_VAR", "Serveur", "Base"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table D_Equipe
+ref table D_Match
+ref table D_Stade
+ref table F_EquipeMatch
+ref table F_Stat
+ref table F_But
+ref table F_Carton
+ref table F_Remplacement
+ref table F_VAR
+ref table Metrics
+ref table DuelA
+ref table DuelB
